@@ -1,12 +1,12 @@
-import { AUTH_LOGIN } from './types';
+import { USER_LOGIN } from './types';
 
 function userData(state = {}, action) {
   switch (action.type) {
-    case AUTH_LOGIN:
+    case USER_LOGIN:
       return action.payload;
     default:
       return state;
   }
 }
 
-export { userData };
+export default { userData };

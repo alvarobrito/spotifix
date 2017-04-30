@@ -13,20 +13,24 @@
   },
   "dependencies": {
     "cross-env": "^3.2.4",
+    "es-decorators": "^1.0.0",
+    "history": "^4.6.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
-    "react-router-redux": "^5.0.0-alpha.6",
+    "react-router-redux": "next",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.0"
+    "reselect": "^3.0.0",
+    "spotify-web-api-node": "^2.3.6"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
     "babel-loader": "^6.4.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-react": "^6.24.1",

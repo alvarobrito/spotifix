@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack'); // eslint-disable-line import/no-extraneous-dependencies
 
 const resolve = dir => path.join(__dirname, './', dir);
-
 const SOURCE_PATH = resolve('src');
 const OUTPUT_PATH = resolve('dist');
 
@@ -68,6 +67,10 @@ module.exports = {
     compress: false,
     inline: true,
     hot: true,
+    setup: (app) => {
+      // middlewares
+      app.get('/login', (req, res) => {});
+    },
     stats: {
       assets: true,
       children: false,

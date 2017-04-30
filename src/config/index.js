@@ -10,7 +10,7 @@ export default {
     accounts: {
       auth: 'https://accounts.spotify.com/authorize',
       token: 'https://accounts.spotify.com/api/token',
-      redirectURI: 'http://localhost:8080/callback',
+      redirectURI: 'http://localhost:8080',
     },
     endpoints: {
       user: 'me',
