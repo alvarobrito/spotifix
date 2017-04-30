@@ -69,7 +69,7 @@ module.exports = {
     hot: true,
     setup: (app) => {
       // middlewares
-      app.get('/login', (req, res) => {});
+      // app.get('/login', (req, res) => {});
     },
     stats: {
       assets: true,
