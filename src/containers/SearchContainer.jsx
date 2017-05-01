@@ -1,11 +1,24 @@
 import React from 'react';
-import List from '@/components/List';
+import SongList from '@/components/SongList';
 import Search from '@/components/Search';
+
+const songList = [
+  {
+    name: 'Yeah',
+    artist: 'Sting',
+    album: 'First',
+  },
+  {
+    name: 'Yes',
+    artist: 'Interpol',
+    album: 'Antics',
+  },
+];
 
 const SearchContainer = () => (
   <div className="search-wrapper">
     <Search />
-    <List />
+    <SongList songs={songList} />
   </div>
 );
 
