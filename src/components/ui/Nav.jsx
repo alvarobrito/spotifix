@@ -1,22 +1,43 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { NavLink } from 'react-router-dom';
 
+const links = [
+  {
+    text: 'Home',
+    path: '/',
+  },
+  {
+    text: 'Browse',
+    path: '/browse',
+  },
+  {
+    text: 'Login',
+    path: '/login',
+  },
+];
+
 const Nav = props => (
-  <ul className="nav">
-    {props.links.map(l =>
-      <li className="nav__item" key={l.text.trim()}>
-        <NavLink activeClassName="nav__link--active" to={l.path}>{l.text}</NavLink>
-      </li>)}
-  </ul>
+  <IconMenu
+    {...props}
+    iconButtonElement={
+      <IconButton><MoreVertIcon /></IconButton>
+    }
+    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+  >
+    <div>
+      {links.map((l, i) =>
+        <MenuItem
+          key={i}
+          primaryText={l.text}
+          containerElement={<NavLink to={l.path} />}
+        />)}
+    </div>
+  </IconMenu>
 );
-
-Nav.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.object),
-};
-
-Nav.defaultProps = {
-  links: [],
-};
 
 export default Nav;

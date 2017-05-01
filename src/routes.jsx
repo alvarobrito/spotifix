@@ -5,7 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 // Containers
 import SearchContainer from '@/containers/SearchContainer';
-import SideBarContainer from '@/containers/SideBarContainer';
+import Header from '@/components/ui/Header';
 
 // Pages
 import HomePage from '@/pages/HomePage';
@@ -14,7 +14,7 @@ import LoginPage from '@/pages/LoginPage';
 const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
     <div>
-      <SideBarContainer />
+      <Header />
       <Route exact path="/" component={HomePage} />
       <Route path="/browse" component={SearchContainer} />
       <Route path="/login" component={LoginPage} />
