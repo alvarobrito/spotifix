@@ -16,7 +16,7 @@ const links = [
   },
   {
     text: 'Artist',
-    path: '/artist?albums=4gzpq5DPGxSnKTe4SA8HAU',
+    path: '/artist/4gzpq5DPGxSnKTe4SA8HAU',
   },
   {
     text: 'Login',
@@ -28,7 +28,7 @@ const Nav = props => (
   <IconMenu
     {...props}
     iconButtonElement={
-      <IconButton><MoreVertIcon /></IconButton>
+      <IconButton><MoreVertIcon color="white" /></IconButton>
     }
     targetOrigin={{ horizontal: 'right', vertical: 'top' }}
     anchorOrigin={{ horizontal: 'right', vertical: 'top' }}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { compose, combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import authRedirectMiddleware from '@/middlewares/auth';
-import artist from '@/modules/artist/reducers';
+import reducers from '@/modules';
 import Routes from './routes';
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -18,12 +18,16 @@ const history = createHistory();
 // Build the middleware for intercepting and dispatching navigation actions
 const middlewareRouter = routerMiddleware(history);
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
   combineReducers({
-    artist,
+    ...reducers,
     router: routerReducer,
   }),
-  applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk),
+  composeEnhancers(
+    applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk),
+  ),
 );
 
 injectTapEventPlugin();

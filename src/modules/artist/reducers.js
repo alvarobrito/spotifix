@@ -1,5 +1,5 @@
 import { createReducer } from '../../utils/reducers.utils';
-import { SET_ALBUMS } from './types';
+import { SET_ALBUMS, SET_ARTIST } from './types';
 
 const INIT_STATE = {
   albums: [],
@@ -12,6 +12,13 @@ const artistHandler = {
     return {
       ...state,
       albums: payload,
+    };
+  },
+
+  [SET_ARTIST](state, payload) {
+    return {
+      ...state,
+      data: payload,
     };
   },
 
