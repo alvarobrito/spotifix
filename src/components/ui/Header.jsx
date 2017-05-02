@@ -6,11 +6,11 @@ import Nav from './Nav';
  * A simple example of `AppBar` with an icon on the right.
  * By default, the left icon is a navigation-menu.
  */
-const AppBarExampleIcon = () => (
+const Header = () => (
   <AppBar
-    title="Title"
+    title="Spotifix"
     iconElementLeft={<Nav />}
   />
 );
 
-export default AppBarExampleIcon;
+export default Header;

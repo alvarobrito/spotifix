@@ -10,6 +10,7 @@ import Header from '@/components/ui/Header';
 // Pages
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
+import ArtistPage from '@/pages/ArtistPage';
 
 const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
@@ -18,6 +19,7 @@ const Routes = ({ history }) => (
       <Route exact path="/" component={HomePage} />
       <Route path="/browse" component={SearchContainer} />
       <Route path="/login" component={LoginPage} />
+      <Route path="/artist" component={ArtistPage} />
     </div>
   </ConnectedRouter>
 );

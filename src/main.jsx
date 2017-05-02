@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import authRedirectMiddleware from '@/middlewares/auth';
-import reducers from '@/modules';
+import artist from '@/modules/artist/reducers';
 import Routes from './routes';
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -20,7 +20,7 @@ const middlewareRouter = routerMiddleware(history);
 
 const store = createStore(
   combineReducers({
-    ...reducers,
+    artist,
     router: routerReducer,
   }),
   applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk),

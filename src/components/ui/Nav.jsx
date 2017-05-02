@@ -15,6 +15,10 @@ const links = [
     path: '/browse',
   },
   {
+    text: 'Artist',
+    path: '/artist?albums=4gzpq5DPGxSnKTe4SA8HAU',
+  },
+  {
     text: 'Login',
     path: '/login',
   },

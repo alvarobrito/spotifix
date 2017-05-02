@@ -27,7 +27,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.0",
-    "spotify-web-api-node": "^2.3.6"
+    "spotify-web-api-js": "^0.21.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
