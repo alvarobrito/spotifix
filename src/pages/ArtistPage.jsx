@@ -10,7 +10,6 @@ class ArtistPage extends Component {
 
   componentWillMount() {
     this.props.getArtist(this.props.artistId);
-    console.log('artit', this.props.artist);
   }
 
   render() {
