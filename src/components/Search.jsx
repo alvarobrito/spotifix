@@ -8,7 +8,7 @@ const Search = ({ onChange }) => (
   <Toolbar>
     <ToolbarGroup>
       <TextField
-        hintText="Search anything..."
+        hintText="Search a song..."
         onChange={onChange}
       />
     </ToolbarGroup>

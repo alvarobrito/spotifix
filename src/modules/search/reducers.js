@@ -11,8 +11,7 @@ const searchHandler = {
 
   [SET_SONGS](state, payload) {
     const newState = Object.assign({}, state, {
-      songs: payload.songs,
-      loading: false,
+      songs: payload,
       selectedSongs: [],
     });
 
@@ -30,8 +29,6 @@ const searchHandler = {
   },
 
   [SET_LOADING](state, payload) {
-    if (state.loading) return state;
-
     return Object.assign({}, state, { loading: payload });
   },
 

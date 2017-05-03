@@ -13,16 +13,26 @@ export const selectSong = song => dispatch =>
     payload: song,
   });
 
-const setLoading = () => dispatch =>
+const setLoading = loading => dispatch =>
   dispatch({
     type: SET_LOADING,
+    payload: loading,
   });
 
 export const fetchSongs = searchInput => (dispatch) => {
   dispatch(setLoading(true));
 
   spotifyApi.searchTracks(searchInput)
-  .then(({ tracks }) => {
-    console.log('Search by ', searchInput, tracks);
+  .then(({ tracks: { items } }) => {
+    const tracks = items.map(({ id, name: trackName, artists, album: { name: albumName } }) => ({
+      id,
+      trackName,
+      artists,
+      albumName,
+    }));
+
+    dispatch(setLoading(false));
+
+    dispatch(setSongs(tracks));
   });
 };
