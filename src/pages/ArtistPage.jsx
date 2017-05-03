@@ -12,7 +12,7 @@ class ArtistPage extends Component {
   }
 
   render() {
-    const { artist, albums } = this.props;
+    const { artist } = this.props;
     return (
       <div>
         <Card>
@@ -22,7 +22,7 @@ class ArtistPage extends Component {
             <img src={artist.images[0].url} alt={artist.name} />
           </CardMedia>
           <CardText>
-            <Albums albums={albums} />
+            <Albums albums={artist.albums} />
           </CardText>
         </Card>
       </div>
@@ -33,21 +33,14 @@ class ArtistPage extends Component {
 
 // PropTypes validation
 ArtistPage.propTypes = {
-  albums: PropTypes.arrayOf(PropTypes.object),
   artist: PropTypes.object,
   artistId: PropTypes.string.isRequired,
   getArtist: PropTypes.func.isRequired,
 };
 
-ArtistPage.defaultProps = {
-  albums: [],
-  artist: {},
-  loading: false,
-};
 
 // Redux connector
 const mapStateToProps = ({ artist }, { match }) => ({
-  albums: artist.albums,
   artist: artist.data,
   loading: artist.loading,
   artistId: match.params.artistId,
