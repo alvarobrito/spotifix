@@ -19,7 +19,7 @@ class ArtistPage extends Component {
           <CardMedia
             overlay={<CardTitle title={artist.name} />}
           >
-            <img src="https://i.scdn.co/image/143b0f286f76ece3a711f673d9ba00b8f499b2c0" alt={artist.name} />
+            <img src={artist.images[0].url} alt={artist.name} />
           </CardMedia>
           <CardText>
             <Albums albums={albums} />
@@ -42,12 +42,14 @@ ArtistPage.propTypes = {
 ArtistPage.defaultProps = {
   albums: [],
   artist: {},
+  loading: false,
 };
 
 // Redux connector
 const mapStateToProps = ({ artist }, { match }) => ({
   albums: artist.albums,
   artist: artist.data,
+  loading: artist.loading,
   artistId: match.params.artistId,
 });
 

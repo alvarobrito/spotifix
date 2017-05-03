@@ -1,8 +1,17 @@
 import { createReducer } from '../../utils/reducers.utils';
-import { SET_ALBUMS, SET_ARTIST } from './types';
+import { SET_LOADING, SET_ALBUMS, SET_ARTIST } from './types';
 
 const INIT_STATE = {
   albums: [],
+  data: {
+    images: [
+      {
+        url: '',
+        width: 'auto',
+        height: 'auto',
+      },
+    ],
+  },
   loading: false,
 };
 
@@ -19,6 +28,13 @@ const artistHandler = {
     return {
       ...state,
       data: payload,
+    };
+  },
+
+  [SET_LOADING](state, payload) {
+    return {
+      ...state,
+      loading: payload,
     };
   },
 

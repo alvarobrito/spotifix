@@ -15,7 +15,7 @@ const styles = {
 
 const Albums = ({ albums }) => (
   <div style={styles.root}>
-    <GridList cols="4">
+    <GridList cols={4}>
       <Subheader>Albums</Subheader>
       {albums.map(a =>
         <GridTile
