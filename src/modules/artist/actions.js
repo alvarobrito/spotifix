@@ -15,15 +15,18 @@ const getArtist = artistId => (dispatch) => {
   .then(artist =>
     spotifyApi.getArtistAlbums(artistId)
     .then(({ items }) =>
-      dispatch({
-        type: SET_ARTIST,
-        payload: {
-          ...artist,
-          albums: items,
-        },
-      }),
-      dispatch(setLoading(false)),
-    )).catch(error => console.error(error));
+      spotifyApi.getArtistTopTracks(artistId, 'ES')
+      .then(({ tracks }) =>
+        dispatch({
+          type: SET_ARTIST,
+          payload: {
+            ...artist,
+            albums: items,
+            topTracks: tracks,
+          },
+        }),
+        dispatch(setLoading(false)),
+      ))).catch(error => console.error(error));
 };
 
 export { setLoading, getArtist };

@@ -20,11 +20,11 @@ const SongList = ({ songs }) => (
       </TableRow>
     </TableHeader>
     <TableBody>
-      {songs.map(({ id, trackName, artists, albumName }) =>
+      {songs.map(({ id, trackName, name, artists, album, albumName }) =>
         <TableRow key={id}>
-          <TableRowColumn>{trackName}</TableRowColumn>
+          <TableRowColumn>{trackName || name}</TableRowColumn>
           <TableRowColumn>{artists.reduce(artistsReducer, '')}</TableRowColumn>
-          <TableRowColumn>{albumName}</TableRowColumn>
+          <TableRowColumn>{albumName || album.name}</TableRowColumn>
         </TableRow>)
       }
     </TableBody>

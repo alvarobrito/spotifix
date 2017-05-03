@@ -10,6 +10,8 @@ const INIT_STATE = {
         url: '',
       },
     ],
+    albums: [],
+    topTracks: [],
   },
   loading: false,
 };

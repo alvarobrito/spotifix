@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import { getArtist } from '@/modules/artist/actions';
 import Albums from '@/components/Albums';
-import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import SongList from '@/components/SongList';
 
 class ArtistPage extends Component {
 
   componentWillMount() {
     this.props.getArtist(this.props.artistId);
+    console.log('artit', this.props.artist);
   }
 
   render() {
@@ -23,6 +25,7 @@ class ArtistPage extends Component {
           </CardMedia>
           <CardText>
             <Albums albums={artist.albums} />
+            <SongList songs={artist.topTracks} />
           </CardText>
         </Card>
       </div>
