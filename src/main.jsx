@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
@@ -26,7 +27,7 @@ const store = createStore(
     router: routerReducer,
   }),
   composeEnhancers(
-    applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk),
+    applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk, logger),
   ),
 );
 
