@@ -1,7 +1,8 @@
 import { createReducer } from '../../utils/reducers.utils';
-import { SET_SONGS, SELECT_SONG } from './types';
+import { SET_SONGS, SELECT_SONG, SET_LOADING } from './types';
 
 const INIT_STATE = {
+  loading: false,
   songs: [],
   selectedSongs: [],
 };
@@ -11,6 +12,7 @@ const searchHandler = {
   [SET_SONGS](state, payload) {
     const newState = Object.assign({}, state, {
       songs: payload.songs,
+      loading: false,
       selectedSongs: [],
     });
 
@@ -25,6 +27,12 @@ const searchHandler = {
     });
 
     return newState;
+  },
+
+  [SET_LOADING](state, payload) {
+    if (state.loading) return state;
+
+    return Object.assign({}, state, { loading: payload });
   },
 
 };
