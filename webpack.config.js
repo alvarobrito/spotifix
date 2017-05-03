@@ -12,6 +12,7 @@ module.exports = {
   output: {
     path: OUTPUT_PATH,
     filename: 'bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -62,7 +63,9 @@ module.exports = {
   ],
   devServer: {
     contentBase: SOURCE_PATH,
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true,
+    },
     port: 8080,
     compress: false,
     inline: true,
