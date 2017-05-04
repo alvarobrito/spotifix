@@ -11,24 +11,26 @@ const artistsReducer = (prev, next) => {
 };
 
 const SongList = ({ songs }) => (
-  <Table>
-    <TableHeader>
-      <TableRow>
-        <TableHeaderColumn>Name</TableHeaderColumn>
-        <TableHeaderColumn>Artist</TableHeaderColumn>
-        <TableHeaderColumn>Album</TableHeaderColumn>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {songs.map(({ id, trackName, name, artists, album, albumName }) =>
-        <TableRow key={id}>
-          <TableRowColumn>{trackName || name}</TableRowColumn>
-          <TableRowColumn>{artists.reduce(artistsReducer, '')}</TableRowColumn>
-          <TableRowColumn>{albumName || album.name}</TableRowColumn>
-        </TableRow>)
-      }
-    </TableBody>
-  </Table>
+  <div>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHeaderColumn>Name</TableHeaderColumn>
+          <TableHeaderColumn>Artist</TableHeaderColumn>
+          <TableHeaderColumn>Album</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {songs.map(({ id, trackName, name, artists, album, albumName }) =>
+          <TableRow key={id}>
+            <TableRowColumn>{trackName || name}</TableRowColumn>
+            <TableRowColumn>{artists.reduce(artistsReducer, '')}</TableRowColumn>
+            <TableRowColumn>{albumName || album.name}</TableRowColumn>
+          </TableRow>)
+        }
+      </TableBody>
+    </Table>
+  </div>
 );
 
 SongList.propTypes = {
