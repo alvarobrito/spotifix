@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import TableRightIconMenu from './ui/TableRightIconMenu';
 
 const artistsReducer = (prev, next) => {
   if (!prev) {
@@ -12,12 +14,14 @@ const artistsReducer = (prev, next) => {
 
 const SongList = ({ songs }) => (
   <div>
-    <Table>
+    <Subheader>Songs</Subheader>
+    <Table multiSelectable>
       <TableHeader>
         <TableRow>
           <TableHeaderColumn>Name</TableHeaderColumn>
           <TableHeaderColumn>Artist</TableHeaderColumn>
           <TableHeaderColumn>Album</TableHeaderColumn>
+          <TableRightIconMenu items={[{ title: 'Add to playlist' }]} />
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -26,6 +30,7 @@ const SongList = ({ songs }) => (
             <TableRowColumn>{trackName || name}</TableRowColumn>
             <TableRowColumn>{artists.reduce(artistsReducer, '')}</TableRowColumn>
             <TableRowColumn>{albumName || album.name}</TableRowColumn>
+            <TableRightIconMenu items={[{ title: 'Add to playlist', onClickHandler: () => (console.log('yeah')) }]} />
           </TableRow>)
         }
       </TableBody>

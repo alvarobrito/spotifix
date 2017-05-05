@@ -16,9 +16,6 @@ const Search = ({ onChange }) => (
       <RaisedButton
         label="Filters"
       />
-      <RaisedButton
-        label="Add to playlist"
-      />
     </ToolbarGroup>
   </Toolbar>
 );
