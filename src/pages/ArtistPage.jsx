@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import Subheader from 'material-ui/Subheader';
 import { getArtist } from '@/modules/artist/actions';
 import Albums from '@/components/Albums';
 import SongList from '@/components/SongList';
@@ -23,7 +24,9 @@ class ArtistPage extends Component {
             <img src={artist.images[0].url} alt={artist.name} />
           </CardMedia>
           <CardText>
+            <Subheader>Albums</Subheader>
             <Albums albums={artist.albums} />
+            <Subheader>Top tracks</Subheader>
             <SongList songs={artist.topTracks} />
           </CardText>
         </Card>
