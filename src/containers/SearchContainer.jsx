@@ -5,17 +5,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import SongList from '@/components/SongList';
 import Search from '@/components/Search';
-import { fetchSongs } from '@/modules/search/actions';
+import { fetchSongs, fetchMoreSongs } from '@/modules/search/actions';
 
 const SearchContainer = ({ onSearchChange, addMoreSongs, songs, searchInput, loading }) => (
   <div className="search-wrapper">
-    <Search onChange={onSearchChange} />
+    <Search onChange={(event, searchInputNow) => onSearchChange(searchInputNow)} />
     <SongList songs={songs} />
     <div>
       {(songs.length > 0) && (
         <RaisedButton
           label="More"
-          onClick={addMoreSongs(searchInput)}
+          onClick={() => addMoreSongs(searchInput)}
         />
       )}
       {(loading) && (
@@ -43,15 +43,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onSearchChange: (event, searchInput) => {
-      dispatch(fetchSongs(searchInput));
-    },
-    addMoreSongs: searchInput => () => {
-      dispatch(fetchSongs(searchInput));
-    },
-  };
-}
+const mapDispatchToProps = {
+  onSearchChange: fetchSongs,
+  addMoreSongs: fetchMoreSongs,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
