@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
+import { generate } from 'shortid';
 import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import TableRightIconMenu from './ui/TableRightIconMenu';
@@ -28,7 +30,9 @@ const SongList = ({ songs }) => (
         {songs.map(({ id, trackName, name, artists, album, albumName }) =>
           <TableRow key={id}>
             <TableRowColumn>{trackName || name}</TableRowColumn>
-            <TableRowColumn>{artists.reduce(artistsReducer, '')}</TableRowColumn>
+            <TableRowColumn>{artists.map(artist => (
+              <div key={generate()}><NavLink to={`/artist/${artist.id}`}>{artist.name}</NavLink></div>
+            ))}</TableRowColumn>
             <TableRowColumn>{albumName || album.name}</TableRowColumn>
             <TableRightIconMenu items={[{ title: 'Add to playlist', onClickHandler: () => (console.log('yeah')) }]} />
           </TableRow>)
