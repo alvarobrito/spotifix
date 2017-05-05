@@ -27,13 +27,13 @@ const SongList = ({ songs }) => (
         </TableRow>
       </TableHeader>
       <TableBody>
-        {songs.map(({ id, trackName, name, artists, album, albumName }) =>
+        {songs.map(({ id, trackName, artists, albumName }) =>
           <TableRow key={id}>
-            <TableRowColumn>{trackName || name}</TableRowColumn>
+            <TableRowColumn>{trackName}</TableRowColumn>
             <TableRowColumn>{artists.map(artist => (
               <div key={generate()}><NavLink to={`/artist/${artist.id}`}>{artist.name}</NavLink></div>
             ))}</TableRowColumn>
-            <TableRowColumn>{albumName || album.name}</TableRowColumn>
+            <TableRowColumn>{albumName}</TableRowColumn>
             <TableRightIconMenu items={[{ title: 'Add to playlist', onClickHandler: () => (console.log('yeah')) }]} />
           </TableRow>)
         }
