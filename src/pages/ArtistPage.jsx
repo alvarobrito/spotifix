@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
 import { getArtist } from '@/modules/artist/actions';
+
+// Custom
 import Albums from '@/components/Albums';
 import SongList from '@/components/SongList';
+import Spinner from '@/components/ui/Spinner';
 
 class ArtistPage extends Component {
 
@@ -14,22 +17,25 @@ class ArtistPage extends Component {
   }
 
   render() {
-    const { artist } = this.props;
+    const { loading, artist, artistId } = this.props;
     return (
       <div>
-        <Card>
-          <CardMedia
-            overlay={<CardTitle title={artist.name} />}
-          >
-            <img src={artist.images[0].url} alt={artist.name} />
-          </CardMedia>
-          <CardText>
-            <Subheader>Albums</Subheader>
-            <Albums albums={artist.albums} />
-            <Subheader>Top tracks</Subheader>
-            <SongList songs={artist.topTracks} />
-          </CardText>
-        </Card>
+        {(!loading) && (
+          <Card>
+            <CardMedia
+              overlay={<CardTitle title={artist.name} />}
+            >
+              <img src={artist.images[0].url} alt={artist.name} />
+            </CardMedia>
+            <CardText>
+              <Subheader>Albums</Subheader>
+              <Albums albums={artist.albums} artistId={artistId} />
+              <Subheader>Top tracks</Subheader>
+              <SongList songs={artist.topTracks} />
+            </CardText>
+          </Card>
+        )}
+        {(loading) && (<Spinner />)}
       </div>
     );
   }
@@ -38,6 +44,7 @@ class ArtistPage extends Component {
 
 // PropTypes validation
 ArtistPage.propTypes = {
+  loading: PropTypes.bool.isRequired,
   artist: PropTypes.object,
   artistId: PropTypes.string.isRequired,
   getArtist: PropTypes.func.isRequired,

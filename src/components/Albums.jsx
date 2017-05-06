@@ -13,11 +13,11 @@ const styles = {
   },
 };
 
-const Albums = ({ albums }) => (
+const Albums = ({ albums, artistId }) => (
   <div style={styles.root}>
     <GridList cols={4}>
       {albums.map(a =>
-        <NavLink key={a.id} to={`/album/${a.id}`}>
+        <NavLink key={a.id} to={`/artist/${artistId}/album/${a.id}`}>
           <GridTile
             key={a.id}
             title={a.name}
@@ -33,6 +33,7 @@ const Albums = ({ albums }) => (
 
 Albums.propTypes = {
   albums: PropTypes.arrayOf(PropTypes.object),
+  artistId: PropTypes.string.isRequired,
 };
 
 Albums.defaultProps = {

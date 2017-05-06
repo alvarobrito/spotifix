@@ -1,9 +1,10 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { generate } from 'shortid';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import { NavLink } from 'react-router-dom';
 
 const links = [
   {
@@ -13,10 +14,6 @@ const links = [
   {
     text: 'Browse',
     path: '/browse',
-  },
-  {
-    text: 'Artist',
-    path: '/artist/4gzpq5DPGxSnKTe4SA8HAU',
   },
   {
     text: 'Login',
@@ -34,9 +31,9 @@ const Nav = props => (
     anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
   >
     <div>
-      {links.map((l, i) =>
+      {links.map(l =>
         <MenuItem
-          key={i}
+          key={generate()}
           primaryText={l.text}
           containerElement={<NavLink to={l.path} />}
         />)}
