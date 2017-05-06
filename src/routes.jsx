@@ -20,7 +20,8 @@ const Routes = ({ history }) => (
       <Route exact path="/" component={HomePage} />
       <Route path="/browse" component={SearchContainer} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/artist/:artistId" component={ArtistPage} />
+      <Route path="/artist/:artistId" exact component={ArtistPage} />
+      <Route path="/artist/:artistId/album/:albumId" component={AlbumPage} />
       <Route path="/album/:albumId" component={AlbumPage} />
     </div>
   </ConnectedRouter>

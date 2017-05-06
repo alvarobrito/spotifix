@@ -2,28 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { generate } from 'shortid';
-import Subheader from 'material-ui/Subheader';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import TableRightIconMenu from './ui/TableRightIconMenu';
 
-const artistsReducer = (prev, next) => {
-  if (!prev) {
-    return next.name;
-  }
-
-  return `${prev}, ${next.name}`;
-};
-
-const SongList = ({ songs }) => (
+const SongList = ({ songs, addSongToPlaylist, addSelectedToPlaylist }) => (
   <div>
-    <Subheader>Songs</Subheader>
     <Table multiSelectable>
       <TableHeader>
         <TableRow>
           <TableHeaderColumn>Name</TableHeaderColumn>
           <TableHeaderColumn>Artist</TableHeaderColumn>
           <TableHeaderColumn>Album</TableHeaderColumn>
-          <TableRightIconMenu items={[{ title: 'Add to playlist' }]} />
+          <TableRightIconMenu
+            items={[
+              {
+                title: 'Add to playlist',
+                onClickHandler: addSelectedToPlaylist,
+              },
+            ]}
+          />
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -34,7 +31,14 @@ const SongList = ({ songs }) => (
               <div key={generate()}><NavLink to={`/artist/${artist.id}`}>{artist.name}</NavLink></div>
             ))}</TableRowColumn>
             <TableRowColumn>{albumName}</TableRowColumn>
-            <TableRightIconMenu items={[{ title: 'Add to playlist', onClickHandler: () => (console.log('yeah')) }]} />
+            <TableRightIconMenu
+              items={[
+                {
+                  title: 'Add to playlist',
+                  onClickHandler: addSongToPlaylist,
+                },
+              ]}
+            />
           </TableRow>)
         }
       </TableBody>
@@ -44,6 +48,8 @@ const SongList = ({ songs }) => (
 
 SongList.propTypes = {
   songs: PropTypes.arrayOf(PropTypes.object),
+  addSongToPlaylist: PropTypes.func,
+  addSelectedToPlaylist: PropTypes.func,
 };
 
 SongList.defaultProps = {

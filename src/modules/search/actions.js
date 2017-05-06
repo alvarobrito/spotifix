@@ -52,6 +52,10 @@ const getSongs = dispatch => getState => addSongsAction => () => {
     dispatch(setLoading(false));
 
     dispatch(addSongsAction(tracks));
+  })
+  .catch((e) => {
+    dispatch(setLoading(false));
+    throw e;
   });
 };
 
@@ -64,15 +68,15 @@ export const fetchSongs = searchInput => (dispatch, getState) => {
 
   const { search: { searchInput: currentSearchInput } } = getState();
 
-  if (currentSearchInput === searchInput) {
-    const addNewSongs = getSongs(dispatch)(getState)(addSongs);
-    dispatch(addOffset());
-    addNewSongs(searchInput);
-
-    return;
-  }
+  if (currentSearchInput === searchInput) return;
 
   const firstFetch = getSongs(dispatch)(getState)(setSongs);
   dispatch(setSearchInput(searchInput));
   firstFetch(searchInput);
+};
+
+export const fetchMoreSongs = searchInput => (dispatch, getState) => {
+  const addNewSongs = getSongs(dispatch)(getState)(addSongs);
+  dispatch(addOffset());
+  addNewSongs(searchInput);
 };
