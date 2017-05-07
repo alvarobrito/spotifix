@@ -12,6 +12,7 @@ const INIT_STATE = {
     ],
     albums: [],
     topTracks: [],
+    related: [],
   },
   loading: false,
 };

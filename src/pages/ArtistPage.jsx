@@ -8,6 +8,7 @@ import { getArtist } from '@/modules/artist/actions';
 // Custom
 import Albums from '@/components/Albums';
 import SongList from '@/components/SongList';
+import Related from '@/components/Related';
 import Spinner from '@/components/ui/Spinner';
 
 class ArtistPage extends Component {
@@ -32,6 +33,8 @@ class ArtistPage extends Component {
               <Albums albums={artist.albums} artistId={artistId} />
               <Subheader>Top tracks</Subheader>
               <SongList songs={artist.topTracks} />
+              <Subheader>Related artists</Subheader>
+              <Related artists={artist.related} />
             </CardText>
           </Card>
         )}

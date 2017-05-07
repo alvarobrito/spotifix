@@ -8,6 +8,7 @@ async function composeArtist(artistId) {
     spotifyApi.getArtist(artistId),
     spotifyApi.getArtistAlbums(artistId),
     spotifyApi.getArtistTopTracks(artistId, 'ES'),
+    spotifyApi.getArtistRelatedArtists(artistId),
   ]);
 }
 
@@ -20,13 +21,14 @@ const setLoading = loading => ({
 const getArtist = artistId => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const [data, albums, popular] = await composeArtist(artistId);
+    const [data, albums, popular, related] = await composeArtist(artistId);
     dispatch({
       type: SET_ARTIST,
       payload: {
         ...data,
         albums: albums.items,
         topTracks: popular.tracks,
+        related: related.artists,
       },
     });
     dispatch(setLoading(false));
