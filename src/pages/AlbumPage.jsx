@@ -12,6 +12,12 @@ class AlbumPage extends Component {
     this.props.getAlbum(this.props.albumId);
   }
 
+  componentWillReceiveProps({ albumId }) {
+    if (this.props.albumId !== albumId) {
+      this.props.getAlbum(albumId);
+    }
+  }
+
   render() {
     const { album } = this.props;
     return (

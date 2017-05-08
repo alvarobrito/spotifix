@@ -17,6 +17,12 @@ class ArtistPage extends Component {
     this.props.getArtist(this.props.artistId);
   }
 
+  componentWillReceiveProps({ artistId }) {
+    if (this.props.artistId !== artistId) {
+      this.props.getArtist(artistId);
+    }
+  }
+
   render() {
     const { loading, artist, artistId } = this.props;
     return (
