@@ -1,5 +1,48 @@
 import spotifyApi from '@/utils/spotify.api';
-import { SET_SEARCH_INPUT, SET_SONGS, ADD_SONGS, SELECT_SONG, ADD_OFFSET, SET_LOADING } from './types';
+import {
+  ADD_TRACKS as SEARCH_ADD_TRACKS,
+  RESET_TRACKS,
+  SET_SEARCH_INPUT,
+  SET_SONGS,
+  ADD_SONGS,
+  SELECT_SONG,
+  ADD_OFFSET,
+  SET_LOADING,
+} from './types';
+import { ADD_TRACKS } from '../tracks/types';
+
+const normalizeTracks = tracks =>
+  (tracks
+  .reduce((prev, { id, name: trackName, artists, album: { name: albumName } }) =>
+    ({
+      ...prev,
+      [id]: {
+        id,
+        trackName,
+        artists,
+        albumName,
+      },
+    }),
+    {})
+  );
+
+export const addTracks = tracks => (dispatch) => {
+  const tracksById = normalizeTracks(tracks);
+
+  dispatch({
+    type: SEARCH_ADD_TRACKS,
+    payload: Object.keys(tracksById),
+  });
+  dispatch({
+    type: ADD_TRACKS,
+    payload: tracksById,
+  });
+};
+
+export const resetTracks = () => dispatch =>
+  dispatch({
+    type: RESET_TRACKS,
+  });
 
 export const setSearchInput = searchInput => dispatch =>
   dispatch({
@@ -36,22 +79,15 @@ const setLoading = loading => dispatch =>
     payload: loading,
   });
 
-const getSongs = dispatch => getState => addSongsAction => () => {
+const getSongs = (dispatch, getState) => {
   const { search: { searchInput, offset } } = getState();
   dispatch(setLoading(true));
 
   spotifyApi.searchTracks(searchInput, { offset })
   .then(({ tracks: { items } }) => {
-    const tracks = items.map(({ id, name: trackName, artists, album: { name: albumName } }) => ({
-      id,
-      trackName,
-      artists,
-      albumName,
-    }));
+    dispatch(addTracks(items));
 
     dispatch(setLoading(false));
-
-    dispatch(addSongsAction(tracks));
   })
   .catch((e) => {
     dispatch(setLoading(false));
@@ -61,8 +97,8 @@ const getSongs = dispatch => getState => addSongsAction => () => {
 
 export const fetchSongs = searchInput => (dispatch, getState) => {
   if (searchInput.length === 0) {
-    setSearchInput(searchInput);
-    dispatch(setSongs([]));
+    dispatch(setSearchInput(searchInput));
+    dispatch(resetTracks());
     return;
   }
 
@@ -70,13 +106,12 @@ export const fetchSongs = searchInput => (dispatch, getState) => {
 
   if (currentSearchInput === searchInput) return;
 
-  const firstFetch = getSongs(dispatch)(getState)(setSongs);
   dispatch(setSearchInput(searchInput));
-  firstFetch(searchInput);
+  dispatch(resetTracks());
+  getSongs(dispatch, getState);
 };
 
-export const fetchMoreSongs = searchInput => (dispatch, getState) => {
-  const addNewSongs = getSongs(dispatch)(getState)(addSongs);
+export const fetchMoreSongs = () => (dispatch, getState) => {
   dispatch(addOffset());
-  addNewSongs(searchInput);
+  getSongs(dispatch, getState);
 };

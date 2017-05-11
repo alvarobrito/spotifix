@@ -6,13 +6,14 @@ import LinearProgress from 'material-ui/LinearProgress';
 import SongList from '@/components/SongList';
 import Search from '@/components/Search';
 import { fetchSongs, fetchMoreSongs } from '@/modules/search/actions';
+import { getSearchTracks } from '@/modules/search/selectors';
 
-const SearchContainer = ({ onSearchChange, addMoreSongs, songs, searchInput, loading }) => (
+const SearchContainer = ({ onSearchChange, addMoreSongs, songs, searchInput, loading, tracks }) => (
   <div className="search-wrapper">
     <Search onChange={(event, searchInputNow) => onSearchChange(searchInputNow)} />
-    <SongList songs={songs} />
+    <SongList songs={tracks} />
     <div>
-      {(songs.length > 0) && (
+      {(tracks.length > 0) && (
         <RaisedButton
           label="More"
           onClick={() => addMoreSongs(searchInput)}
@@ -29,6 +30,7 @@ SearchContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   searchInput: PropTypes.string.isRequired,
   songs: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSearchChange: PropTypes.func.isRequired,
   addMoreSongs: PropTypes.func.isRequired,
 };
@@ -40,6 +42,7 @@ function mapStateToProps(state) {
     searchInput,
     songs,
     loading,
+    tracks: getSearchTracks(state),
   };
 }
 
