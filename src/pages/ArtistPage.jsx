@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
-import { fetchArtist } from '@/modules/artists/actions';
-import { selectArtist } from '@/modules/albums/selectors';
+import { getArtist, selectArtistAlbums } from '@/modules/ui/artist';
 
 // Custom
-import ArtistAlbums from '@/containers/ArtistAlbums';
+import Albums from '@/components/Albums';
 // import SongList from '@/components/SongList';
 // import Related from '@/components/Related';
 import Spinner from '@/components/ui/Spinner';
@@ -15,20 +14,20 @@ import Spinner from '@/components/ui/Spinner';
 class ArtistPage extends Component {
 
   componentWillMount() {
-    this.props.fetchArtist(this.props.artistId);
+    this.props.getArtist(this.props.artistId);
   }
 
   componentWillReceiveProps({ artistId }) {
     if (this.props.artistId !== artistId) {
-      this.props.fetchArtist(artistId);
+      this.props.getArtist(artistId);
     }
   }
 
   render() {
-    const { loading, artist, artistId } = this.props;
+    const { loading, albums, artist, artistId } = this.props;
     return (
       <div>
-        {(!loading && artist) && (
+        {(!loading) && (
           <Card>
             <CardMedia
               overlay={<CardTitle title={artist.name} />}
@@ -37,7 +36,7 @@ class ArtistPage extends Component {
             </CardMedia>
             <CardText>
               <Subheader>Albums</Subheader>
-              <ArtistAlbums artistId={artistId} />
+              <Albums albums={albums} />
               {/* <Subheader>Top tracks</Subheader>
               <SongList songs={artist.topTracks} />
               <Subheader>Related artists</Subheader>
@@ -56,19 +55,21 @@ class ArtistPage extends Component {
 ArtistPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   artist: PropTypes.object,
+  albums: PropTypes.arrayOf(PropTypes.object),
   artistId: PropTypes.string.isRequired,
-  fetchArtist: PropTypes.func.isRequired,
+  getArtist: PropTypes.func.isRequired,
 };
 
 // Redux connector
 const mapStateToProps = (state, { match: { params: { artistId } } }) => ({
-  artist: selectArtist(artistId)(state),
-  loading: state.artists.loading,
+  loading: state.artist.loading,
+  artist: state.artist,
+  albums: selectArtistAlbums(state),
   artistId,
 });
 
 const mapDispatchToProps = {
-  fetchArtist,
+  getArtist,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistPage);

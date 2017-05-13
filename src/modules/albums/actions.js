@@ -77,4 +77,4 @@ const fetchArtistAlbums = artistId => (dispatch) => { // TODO move it to artists
   });
 };
 
-export { setLoading, addAlbums, fetchAlbum, fetchAlbums, fetchArtistAlbums };
+export { setLoading, addAlbums, setAlbums, fetchAlbum, fetchAlbums, fetchArtistAlbums };
