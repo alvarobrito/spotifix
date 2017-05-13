@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
-import { getAlbum } from '@/modules/album/actions';
+import { fetchAlbum } from '@/modules/album/actions';
 import SongList from '@/components/SongList';
 
 class AlbumPage extends Component {
 
   componentWillMount() {
-    this.props.getAlbum(this.props.albumId);
+    this.props.fetchAlbum(this.props.albumId);
   }
 
   componentWillReceiveProps({ albumId }) {
     if (this.props.albumId !== albumId) {
-      this.props.getAlbum(albumId);
+      this.props.fetchAlbum(albumId);
     }
   }
 
@@ -43,7 +43,7 @@ class AlbumPage extends Component {
 AlbumPage.propTypes = {
   album: PropTypes.object,
   albumId: PropTypes.string.isRequired,
-  getAlbum: PropTypes.func.isRequired,
+  fetchAlbum: PropTypes.func.isRequired,
 };
 
 
@@ -55,7 +55,7 @@ const mapStateToProps = ({ album }, { match }) => ({
 });
 
 const mapDispatchToProps = {
-  getAlbum,
+  fetchAlbum,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);

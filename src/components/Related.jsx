@@ -18,7 +18,7 @@ const Related = ({ artists }) => (
   <div style={styles.root}>
     <GridList cols={6}>
       {artists.map(a =>
-        <NavLink key={a.id} to={`/artist/${a.id}`}>
+        <NavLink key={a.id} to={`${a.id}`}>
           <GridTile
             key={a.id}
             style={styles.grid}

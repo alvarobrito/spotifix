@@ -1,11 +1,11 @@
-import artist from './artist/reducers';
-import album from './album/reducers';
+import artists from './artists/reducers';
+import albums from './albums/reducers';
 import search from './search/reducers';
 import tracks from './tracks/reducers';
 
 export default {
-  artist,
-  album,
+  artists,
+  albums,
   search,
   tracks,
 };
