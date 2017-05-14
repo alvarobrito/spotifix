@@ -21,7 +21,6 @@ const Albums = ({ albums }) => (
           <GridTile
             key={a.id}
             title={a.name}
-            subtitle={<span>by <strong>{a.artists[0].name}</strong></span>}
             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
           >
             <img src={a.images[0].url} alt={a.name} />

@@ -38,11 +38,11 @@ class ArtistPage extends Component {
               <img src={artist.images[0].url} alt={artist.name} />
             </CardMedia>
             <CardText>
-              <h2>Albums</h2>
+              <h3>Albums</h3>
               <Albums albums={albums} />
-              {/* <h2>Top tracks</h2>
+              {/* <h3>Top tracks</h3>
               <SongList songs={artist.topTracks} />*/}
-              <h2>Related artists</h2>
+              <h3>Related artists</h3>
               <Related artists={relatedArtists} />
             </CardText>
           </Card>

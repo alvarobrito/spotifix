@@ -10,6 +10,19 @@ export function createReducer(initialState, handlers) {
   };
 }
 
+export function normalize(data) {
+  const items = Array.isArray(data) ? data : [].concat(data);
+
+  return items.reduce((acc, { id, name, images }) => ({
+    ...acc,
+    [id]: {
+      id,
+      name,
+      images,
+      // artists: artists.map(artist => artist.id),
+    },
+  }), {});
+}
 export function inmutableMerge(oldObject, newObject) {
   const merged = Object.keys(newObject).reduce((prev, id) => {
     const item = {};

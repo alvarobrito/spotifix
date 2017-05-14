@@ -1,23 +1,10 @@
 import spotifyApi from '@/utils/spotify.api';
-import { createReducer, inmutableMerge } from '@/utils/reducers.utils';
+import { createReducer, normalize, inmutableMerge } from '@/utils/reducers.utils';
 
 // Actions
 const ADD = 'entities/albums/ADD';
 const SET = 'entities/albums/SET';
 const LOADING = 'entities/albums/LOADING';
-
-// Normalizer
-function normalize(data) {
-  return data.reduce((acc, { id, name, images, artists }) => ({
-    ...acc,
-    [id]: {
-      id,
-      name,
-      images,
-      artists: artists.map(artist => artist.id),
-    },
-  }), {});
-}
 
 // Initial State
 const INIT_STATE = {
