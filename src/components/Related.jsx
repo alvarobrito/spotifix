@@ -10,7 +10,10 @@ const styles = {
     justifyContent: 'space-around',
   },
   grid: {
-    borderRadius: '100%',
+    borderRadius: '50%',
+    border: '1px solid white',
+    boxShadow: '0px 0px 14px 4px rgba(66,62,66,0.5)',
+    margin: '1rem',
   },
 };
 

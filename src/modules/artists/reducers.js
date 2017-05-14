@@ -45,10 +45,6 @@ const artistHandler = {
     };
   },
 
-  default(state) {
-    return state;
-  },
-
 };
 
 export default createReducer(INIT_STATE, artistHandler);

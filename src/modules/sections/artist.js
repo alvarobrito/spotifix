@@ -2,10 +2,11 @@ import { createSelector } from 'reselect';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
 import { setAlbums } from '@/modules/albums/actions';
+import { setArtists } from '@/modules/artists/actions';
 
 // Actions
-const SET_LOADING = 'ui/artist/SET_LOADING';
-const SET_ARTIST = 'ui/artist/SET_ARTIST';
+const LOADING = 'section/artist/LOADING';
+const SET = 'section/artist/SET';
 
 // Initial State
 const INIT_STATE = {
@@ -22,67 +23,62 @@ const INIT_STATE = {
 
 // Reducer
 export default createReducer(INIT_STATE, {
-  [SET_ARTIST](state, payload) {
+
+  [SET](state, payload) {
     return {
       ...state,
       ...payload,
     };
   },
-  [SET_LOADING](state, payload) {
+
+  [LOADING](state, payload) {
     return {
       ...state,
       loading: payload,
     };
   },
-  default(state) {
-    return state;
-  },
+
 });
 
 // Action Creators
 export const setLoading = loading => ({
-  type: SET_LOADING,
+  type: LOADING,
   payload: loading,
 });
 
 export const setArtist = artist => ({
-  type: SET_ARTIST,
+  type: SET,
   payload: artist,
 });
 
 // side effects
 async function fetchArtist(artistId) {
-  return Promise.all([
+  const [artist, albums, popular, related] = await Promise.all([
     spotifyApi.getArtist(artistId),
     spotifyApi.getArtistAlbums(artistId),
     spotifyApi.getArtistTopTracks(artistId, 'ES'),
     spotifyApi.getArtistRelatedArtists(artistId),
   ]);
+
+  return {
+    artist,
+    albums: albums.items,
+    topTracks: popular.tracks,
+    related: related.artists,
+  };
 }
 
 export const getArtist = artistId => async (dispatch) => {
   dispatch(setLoading(true));
-  const [artist, albums, popular, related] = await fetchArtist(artistId);
+  const { artist, albums, topTracks, related } = await fetchArtist(artistId);
   dispatch(setArtist({
     ...artist,
-    albums: albums.items.map(a => a.id),
-    topTracks: popular.tracks.map(t => t.id),
-    related: related.artists.map(r => r.id),
+    albums: albums.map(a => a.id),
+    topTracks: topTracks.map(t => t.id),
+    related: related.map(r => r.id),
   }));
-  dispatch(setAlbums(albums.items));
-  // dispatch(setTracks(popular.tracks));
-  // dispatch(setArtists(related.artists));
+  dispatch(setAlbums(albums));
+  dispatch(setArtists(related));
+  // dispatch(setTracks(topTracks));
   dispatch(setLoading(false));
 };
-
-// Selectors
-const getArtistAlbums = state =>
-  state.artist.albums;
-
-const getAlbums = state =>
-  state.albums.byId;
-
-export const selectArtistAlbums = createSelector(
-  [getArtistAlbums, getAlbums],
-  (albumIds, albums) => albumIds.map(a => albums[a]),
-);

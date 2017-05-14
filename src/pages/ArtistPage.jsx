@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import Subheader from 'material-ui/Subheader';
-import { getArtist, selectArtistAlbums } from '@/modules/ui/artist';
 
-// Custom
+// Modules
+import { getArtist } from '@/modules/sections/artist';
+import { selectArtistAlbums } from '@/modules/selectors/albums';
+import { selectRelatedArtists } from '@/modules/selectors/artists';
+
+// Components
 import Albums from '@/components/Albums';
+import Related from '@/components/Related';
 // import SongList from '@/components/SongList';
-// import Related from '@/components/Related';
 import Spinner from '@/components/ui/Spinner';
 
 class ArtistPage extends Component {
@@ -24,7 +27,7 @@ class ArtistPage extends Component {
   }
 
   render() {
-    const { loading, albums, artist, artistId } = this.props;
+    const { loading, albums, artist, relatedArtists, artistId } = this.props;
     return (
       <div>
         {(!loading) && (
@@ -35,12 +38,12 @@ class ArtistPage extends Component {
               <img src={artist.images[0].url} alt={artist.name} />
             </CardMedia>
             <CardText>
-              <Subheader>Albums</Subheader>
+              <h2>Albums</h2>
               <Albums albums={albums} />
-              {/* <Subheader>Top tracks</Subheader>
-              <SongList songs={artist.topTracks} />
-              <Subheader>Related artists</Subheader>
-              <Related artists={artist.related} /> */}
+              {/* <h2>Top tracks</h2>
+              <SongList songs={artist.topTracks} />*/}
+              <h2>Related artists</h2>
+              <Related artists={relatedArtists} />
             </CardText>
           </Card>
         )}
@@ -54,17 +57,19 @@ class ArtistPage extends Component {
 // PropTypes validation
 ArtistPage.propTypes = {
   loading: PropTypes.bool.isRequired,
-  artist: PropTypes.object,
-  albums: PropTypes.arrayOf(PropTypes.object),
+  artist: PropTypes.object.isRequired,
+  albums: PropTypes.arrayOf(PropTypes.object).isRequired,
+  relatedArtists: PropTypes.arrayOf(PropTypes.object).isRequired,
   artistId: PropTypes.string.isRequired,
   getArtist: PropTypes.func.isRequired,
 };
 
 // Redux connector
 const mapStateToProps = (state, { match: { params: { artistId } } }) => ({
-  loading: state.artist.loading,
-  artist: state.artist,
   albums: selectArtistAlbums(state),
+  relatedArtists: selectRelatedArtists(state),
+  artist: state.sections.artist,
+  loading: state.sections.artist.loading,
   artistId,
 });
 
