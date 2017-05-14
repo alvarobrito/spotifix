@@ -5,7 +5,7 @@ const getRelatedArtists = state =>
   state.sections.artist.related;
 
 const getArtists = state =>
-  state.artists.byId;
+  state.entities.artists.byId;
 
 // TODO memoize combinedselector getAlbums new Selector => (selectAlbums(ids)
 const selectRelatedArtists = createSelector(

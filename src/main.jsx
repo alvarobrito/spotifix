@@ -12,6 +12,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import authRedirectMiddleware from '@/middlewares/auth';
 import reducers from '@/modules';
 import sections from '@/modules/sections';
+import entities from '@/modules/entities';
 import Routes from './routes';
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -25,6 +26,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   combineReducers({
     sections,
+    entities,
     ...reducers,
     router: routerReducer,
   }),

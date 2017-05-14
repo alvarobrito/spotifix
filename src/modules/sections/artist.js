@@ -1,8 +1,7 @@
-import { createSelector } from 'reselect';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import { setAlbums } from '@/modules/albums/actions';
-import { setArtists } from '@/modules/artists/actions';
+import { setAlbums } from '@/modules/entities/albums';
+import { setArtists } from '@/modules/entities/artists';
 
 // Actions
 const LOADING = 'section/artist/LOADING';
