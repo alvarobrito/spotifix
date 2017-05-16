@@ -11,7 +11,7 @@ import Header from '@/components/ui/Header';
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
 import ArtistPage from '@/pages/ArtistPage';
-// import AlbumPage from '@/pages/AlbumPage';
+import AlbumPage from '@/pages/AlbumPage';
 
 const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
@@ -21,8 +21,8 @@ const Routes = ({ history }) => (
       <Route path="/browse" component={SearchContainer} />
       <Route path="/login" component={LoginPage} />
       <Route path="/artist/:artistId" exact component={ArtistPage} />
-      {/* <Route path="/artist/:artistId/album/:albumId" component={AlbumPage} />
-      <Route path="/album/:albumId" component={AlbumPage} /> */}
+      <Route path="/artist/:artistId/album/:albumId" component={AlbumPage} />
+      <Route path="/album/:albumId" component={AlbumPage} />
     </div>
   </ConnectedRouter>
 );

@@ -11,6 +11,7 @@ const withSpinner = (PageComponent) => {
     }
     render() {
       const { loading } = this.props;
+      // loading initial value false, create a state isLoading or check a option in router
       return (
         <div>
           {(!loading) && (<PageComponent {...this.props} />)}

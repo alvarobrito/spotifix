@@ -61,14 +61,6 @@ export const setAlbums = albums => ({
 });
 
 // side effects
-export const fetchAlbum = albumId => (dispatch) => {
-  dispatch(setLoading(true));
-  spotifyApi.getAlbum(albumId, (error, album) => {
-    dispatch(addAlbums([album]));
-    dispatch(setLoading(false));
-  });
-};
-
 export const fetchAlbums = albumIds => (dispatch) => {
   dispatch(setLoading(true));
   spotifyApi.getAlbums(albumIds, (error, { albums }) => {

@@ -17,7 +17,7 @@ const Albums = ({ albums }) => (
   <div style={styles.root}>
     <GridList cols={4}>
       {albums.map(a =>
-        <NavLink key={a.id} to={`album/${a.id}`}>
+        <NavLink key={a.id} to={`../album/${a.id}`}>
           <GridTile
             key={a.id}
             title={a.name}

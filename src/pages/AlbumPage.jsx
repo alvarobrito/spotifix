@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
-import { fetchAlbum } from '@/modules/album/actions';
-import SongList from '@/components/SongList';
+import { fetchAlbum } from '@/modules/sections/album';
+// import SongList from '@/components/SongList';
 
 class AlbumPage extends Component {
 
@@ -29,8 +29,8 @@ class AlbumPage extends Component {
             avatar={album.images[0].url}
           />
           <CardText>
-            <Subheader>Tracks</Subheader>
-            <SongList songs={album.tracks} />
+            <h3>Tracks</h3>
+            {/* <SongList songs={album.tracks} /> */}
           </CardText>
         </Card>
       </div>
@@ -48,8 +48,8 @@ AlbumPage.propTypes = {
 
 
 // Redux connector
-const mapStateToProps = ({ album }, { match }) => ({
-  album: album.data,
+const mapStateToProps = ({ sections: { album } }, { match }) => ({
+  album,
   loading: album.loading,
   albumId: match.params.albumId,
 });

@@ -9,6 +9,8 @@ const SET = 'section/artist/SET';
 
 // Initial State
 const INIT_STATE = {
+  id: '',
+  name: '',
   images: [{
     width: 'auto',
     height: 'auto',
