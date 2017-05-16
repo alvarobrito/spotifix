@@ -54,7 +54,8 @@ export const setArtist = artist => ({
 
 // side effects
 async function fetchArtist(artistId) {
-  const [{ id, name, images }, albums, popular, related] = await Promise.all([
+  const [{ id, name, images }, { items: albums }, { tracks: topTracks }, { artists: related }]
+  = await Promise.all([
     spotifyApi.getArtist(artistId),
     spotifyApi.getArtistAlbums(artistId),
     spotifyApi.getArtistTopTracks(artistId, 'ES'),
@@ -63,9 +64,9 @@ async function fetchArtist(artistId) {
 
   return {
     artist: { id, name, images },
-    albums: albums.items,
-    topTracks: popular.tracks,
-    related: related.artists,
+    albums,
+    topTracks,
+    related,
   };
 }
 
