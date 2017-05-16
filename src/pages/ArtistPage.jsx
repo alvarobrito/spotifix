@@ -27,7 +27,7 @@ class ArtistPage extends Component {
   }
 
   render() {
-    const { loading, albums, artist, relatedArtists, artistId } = this.props;
+    const { loading, albums, artist, relatedArtists } = this.props;
     return (
       <div>
         {(!loading) && (
