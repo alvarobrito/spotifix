@@ -23,6 +23,7 @@ export function normalize(data) {
     },
   }), {});
 }
+
 export function inmutableMerge(oldObject, newObject) {
   const merged = Object.keys(newObject).reduce((prev, id) => {
     const item = {};
@@ -36,6 +37,13 @@ export function inmutableMerge(oldObject, newObject) {
   }, {});
 
   return { ...oldObject, ...merged };
+}
+
+export function union(a, b) {
+  return a.concat(b.reduce((acc, val) => {
+    if (!a.some(a2 => a2 === val)) acc.push(val);
+    return acc;
+  }, []));
 }
 
 export function hasOwnProperty(obj, prop) {

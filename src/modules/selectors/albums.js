@@ -7,10 +7,18 @@ const getArtistAlbums = state =>
 const getAlbums = state =>
   state.entities.albums.byId;
 
+const selectedAlbum = state =>
+  state.sections.album.selectedAlbum;
+
 // TODO memoize combinedselector getAlbums new Selector => (selectAlbums(ids)
 const selectArtistAlbums = createSelector(
   [getArtistAlbums, getAlbums],
   (albumIds, albums) => albumIds.map(a => albums[a]),
 );
 
-export { selectArtistAlbums };
+const selectAlbum = createSelector(
+  [selectedAlbum, getAlbums],
+  (albumId, albums) => albums[albumId],
+);
+
+export { selectAlbum, selectArtistAlbums };

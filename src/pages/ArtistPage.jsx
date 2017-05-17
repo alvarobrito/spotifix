@@ -6,7 +6,7 @@ import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 // Modules
 import { getArtist } from '@/modules/sections/artist';
 import { selectArtistAlbums } from '@/modules/selectors/albums';
-import { selectRelatedArtists } from '@/modules/selectors/artists';
+import { selectArtist, selectRelatedArtists } from '@/modules/selectors/artists';
 
 // Components
 import Albums from '@/components/Albums';
@@ -64,11 +64,23 @@ ArtistPage.propTypes = {
   getArtist: PropTypes.func.isRequired,
 };
 
+ArtistPage.defaultProps = {
+  artist: {
+    id: '',
+    name: '',
+    images: [{
+      width: 'auto',
+      height: 'auto',
+      url: '',
+    }],
+  },
+};
+
 // Redux connector
 const mapStateToProps = (state, { match: { params: { artistId } } }) => ({
   albums: selectArtistAlbums(state),
   relatedArtists: selectRelatedArtists(state),
-  artist: state.sections.artist,
+  artist: selectArtist(state),
   loading: state.sections.artist.loading,
   artistId,
 });

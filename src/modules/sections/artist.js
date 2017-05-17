@@ -1,7 +1,9 @@
+import { normalize } from 'normalizr';
+import schema from '@/modules/entities/schema';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import { setAlbums } from '@/modules/entities/albums';
-import { setArtists } from '@/modules/entities/artists';
+import { addAlbums } from '@/modules/entities/albums';
+import { addArtists } from '@/modules/entities/artists';
 
 // Actions
 const LOADING = 'section/artist/LOADING';
@@ -9,16 +11,10 @@ const SET = 'section/artist/SET';
 
 // Initial State
 const INIT_STATE = {
-  id: '',
-  name: '',
-  images: [{
-    width: 'auto',
-    height: 'auto',
-    url: '',
-  }],
+  selectedArtist: '',
   albums: [],
   topTracks: [],
-  related: [],
+  relatedArtists: [],
   loading: false,
 };
 
@@ -54,7 +50,7 @@ export const setArtist = artist => ({
 
 // side effects
 async function fetchArtist(artistId) {
-  const [{ id, name, images }, { items: albums }, { tracks: topTracks }, { artists: related }]
+  const [{ id, name, images }, { items: albums }, { tracks: topTracks }, { artists: relatedArtists }]
   = await Promise.all([
     spotifyApi.getArtist(artistId),
     spotifyApi.getArtistAlbums(artistId),
@@ -66,21 +62,21 @@ async function fetchArtist(artistId) {
     artist: { id, name, images },
     albums,
     topTracks,
-    related,
+    relatedArtists,
   };
 }
 
 export const getArtist = artistId => async (dispatch) => {
   dispatch(setLoading(true));
-  const { artist, albums, topTracks, related } = await fetchArtist(artistId);
+  const { artist, albums, topTracks, relatedArtists } = await fetchArtist(artistId);
+  dispatch(addArtists(normalize([...relatedArtists, ...[artist]], [schema.artists])));
   dispatch(setArtist({
-    ...artist,
+    selectedArtist: artistId,
     albums: albums.map(a => a.id),
     topTracks: topTracks.map(t => t.id),
-    related: related.map(r => r.id),
+    relatedArtists: relatedArtists.map(r => r.id),
   }));
-  dispatch(setAlbums(albums));
-  dispatch(setArtists(related));
+  dispatch(addAlbums(normalize(albums, [schema.albums])));
   // dispatch(setTracks(topTracks));
   dispatch(setLoading(false));
 };

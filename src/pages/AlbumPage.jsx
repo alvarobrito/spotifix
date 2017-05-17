@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import Subheader from 'material-ui/Subheader';
+
+import { selectAlbum } from '@/modules/selectors/albums';
 import { fetchAlbum } from '@/modules/sections/album';
+import Spinner from '@/components/ui/Spinner';
 // import SongList from '@/components/SongList';
 
 class AlbumPage extends Component {
@@ -19,9 +21,11 @@ class AlbumPage extends Component {
   }
 
   render() {
-    const { album } = this.props;
+    const { album, loading } = this.props;
+    console.log('album', album);
     return (
       <div>
+        {(!loading) && (
         <Card>
           <CardHeader
             title={album.name}
@@ -33,6 +37,8 @@ class AlbumPage extends Component {
             {/* <SongList songs={album.tracks} /> */}
           </CardText>
         </Card>
+        )}
+        {(loading) && (<Spinner />)}
       </div>
     );
   }
@@ -41,17 +47,30 @@ class AlbumPage extends Component {
 
 // PropTypes validation
 AlbumPage.propTypes = {
-  album: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
+  album: PropTypes.object.isRequired,
   albumId: PropTypes.string.isRequired,
   fetchAlbum: PropTypes.func.isRequired,
 };
 
+AlbumPage.defaultProps = {
+  album: {
+    id: '',
+    name: '',
+    label: '',
+    images: [{
+      width: 'auto',
+      height: 'auto',
+      url: '',
+    }],
+  },
+};
 
 // Redux connector
-const mapStateToProps = ({ sections: { album } }, { match }) => ({
-  album,
-  loading: album.loading,
-  albumId: match.params.albumId,
+const mapStateToProps = (state, { match: { params: { albumId } } }) => ({
+  album: selectAlbum(state),
+  loading: state.sections.album.loading,
+  albumId,
 });
 
 const mapDispatchToProps = {

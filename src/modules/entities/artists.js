@@ -1,5 +1,5 @@
 import spotifyApi from '@/utils/spotify.api';
-import { createReducer, normalize, inmutableMerge } from '@/utils/reducers.utils';
+import { createReducer, union, inmutableMerge } from '@/utils/reducers.utils';
 
 // Actions
 const ADD = 'entities/artists/ADD';
@@ -19,19 +19,16 @@ export default createReducer(INIT_STATE, {
   [ADD](state, payload) {
     return {
       ...state,
-      byId: inmutableMerge(state.byId, payload),
-      allIds: [
-        ...state.allIds,
-        ...Object.keys(payload),
-      ],
+      byId: inmutableMerge(state.byId, payload.entities.artists),
+      allIds: union(state.allIds, payload.result),
     };
   },
 
   [SET](state, payload) {
     return {
       ...state,
-      byId: payload,
-      allIds: Object.keys(payload),
+      byId: payload.entities.artists,
+      allIds: payload.result,
     };
   },
 
@@ -52,12 +49,12 @@ export const setLoading = loading => ({
 
 export const addArtists = artists => ({
   type: ADD,
-  payload: normalize(artists),
+  payload: artists,
 });
 
 export const setArtists = artists => ({
   type: SET,
-  payload: normalize(artists),
+  payload: artists,
 });
 
 // side effects
