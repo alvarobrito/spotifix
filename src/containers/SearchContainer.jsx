@@ -8,7 +8,7 @@ import Search from '@/components/Search';
 import { fetchSongs, fetchMoreSongs } from '@/modules/search/actions';
 import { getSearchTracks } from '@/modules/search/selectors';
 
-const SearchContainer = ({ onSearchChange, addMoreSongs, songs, searchInput, loading, tracks }) => (
+const SearchContainer = ({ onSearchChange, addMoreSongs, searchInput, loading, tracks }) => (
   <div className="search-wrapper">
     <Search onChange={(event, searchInputNow) => onSearchChange(searchInputNow)} />
     <SongList songs={tracks} />
@@ -29,18 +29,16 @@ const SearchContainer = ({ onSearchChange, addMoreSongs, songs, searchInput, loa
 SearchContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   searchInput: PropTypes.string.isRequired,
-  songs: PropTypes.arrayOf(PropTypes.object).isRequired,
   tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSearchChange: PropTypes.func.isRequired,
   addMoreSongs: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-  const { search: { searchInput, songs, loading } } = state;
+  const { search: { searchInput, loading } } = state;
 
   return {
     searchInput,
-    songs,
     loading,
     tracks: getSearchTracks(state),
   };

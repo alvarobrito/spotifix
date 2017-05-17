@@ -1,5 +1,5 @@
 import { createReducer } from '../../utils/reducers.utils';
-import { ADD_TRACKS, SET_LOADING } from './types';
+import { ADD_TRACKS } from './types';
 
 const INIT_STATE = {
   loading: false,
@@ -27,10 +27,6 @@ const searchHandler = {
       byId: newById,
       tracksIds: newTracksIds,
     });
-  },
-
-  [SET_LOADING](state, payload) {
-    return Object.assign({}, state, { loading: payload });
   },
 
 };

@@ -1,26 +1,29 @@
+import { normalize } from 'normalizr';
 import spotifyApi from '@/utils/spotify.api';
+import schema from '@/modules/entities/schema';
 import {
   ADD_TRACKS as SEARCH_ADD_TRACKS,
   RESET_TRACKS,
   SET_SEARCH_INPUT,
-  SET_SONGS,
-  ADD_SONGS,
-  SELECT_SONG,
   ADD_OFFSET,
   SET_LOADING,
 } from './types';
 import { ADD_TRACKS } from '../tracks/types';
+import { addArtists } from '../entities/artists';
+import { addAlbums } from '../entities/albums';
+
+
 
 const normalizeTracks = tracks =>
   (tracks
-  .reduce((prev, { id, name: trackName, artists, album: { name: albumName } }) =>
+  .reduce((prev, { id, name, artists, album }) =>
     ({
       ...prev,
       [id]: {
         id,
-        trackName,
-        artists,
-        albumName,
+        name,
+        artists: artists.map(artist => artist.id),
+        album: album.id,
       },
     }),
     {})
@@ -50,24 +53,6 @@ export const setSearchInput = searchInput => dispatch =>
     payload: searchInput,
   });
 
-export const setSongs = songs => dispatch =>
-  dispatch({
-    type: SET_SONGS,
-    payload: songs,
-  });
-
-export const addSongs = songs => dispatch =>
-  dispatch({
-    type: ADD_SONGS,
-    payload: songs,
-  });
-
-export const selectSong = song => dispatch =>
-  dispatch({
-    type: SELECT_SONG,
-    payload: song,
-  });
-
 const addOffset = () => dispatch =>
   dispatch({
     type: ADD_OFFSET,
@@ -79,13 +64,27 @@ const setLoading = loading => dispatch =>
     payload: loading,
   });
 
-const getSongs = (dispatch, getState) => {
+const setFetchedData = dispatch => items => {
+  dispatch(addTracks(items));
+
+  const albums = items.map(track => track.album)
+
+  const artists = items
+  .reduce((prev, next) => {
+    return [...prev, ...next.artists];
+  }, [])
+  dispatch(addArtists(normalize(artists, [schema.artists])));
+
+  dispatch(addAlbums(normalize(albums, [schema.albums])));
+};
+
+const getTracks = (dispatch, getState) => {
   const { search: { searchInput, offset } } = getState();
   dispatch(setLoading(true));
 
   spotifyApi.searchTracks(searchInput, { offset })
   .then(({ tracks: { items } }) => {
-    dispatch(addTracks(items));
+    setFetchedData(dispatch)(items)
 
     dispatch(setLoading(false));
   })
@@ -108,10 +107,10 @@ export const fetchSongs = searchInput => (dispatch, getState) => {
 
   dispatch(setSearchInput(searchInput));
   dispatch(resetTracks());
-  getSongs(dispatch, getState);
+  getTracks(dispatch, getState);
 };
 
 export const fetchMoreSongs = () => (dispatch, getState) => {
   dispatch(addOffset());
-  getSongs(dispatch, getState);
+  getTracks(dispatch, getState);
 };

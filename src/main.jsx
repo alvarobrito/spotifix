@@ -31,7 +31,7 @@ const store = createStore(
     router: routerReducer,
   }),
   composeEnhancers(
-    applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk, logger),
+    applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk),
   ),
 );
 

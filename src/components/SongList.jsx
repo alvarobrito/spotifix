@@ -24,10 +24,10 @@ const SongList = ({ songs, addSongToPlaylist, addSelectedToPlaylist }) => (
         </TableRow>
       </TableHeader>
       <TableBody>
-        {songs.map(({ id, trackName, artists, albumName }) =>
+        {songs && songs.map(({ id, name: trackName, artists, album: { name: albumName } }) =>
           <TableRow key={id}>
             <TableRowColumn>{trackName}</TableRowColumn>
-            <TableRowColumn>{artists.map(artist => (
+            <TableRowColumn>{artists && artists.map(artist => (
               <div key={generate()}><NavLink to={`/artist/${artist.id}`}>{artist.name}</NavLink></div>
             ))}</TableRowColumn>
             <TableRowColumn>{albumName}</TableRowColumn>

@@ -1,19 +1,15 @@
-import { SET_SONGS, ADD_SONGS, SET_LOADING } from './types';
+import { SET_TRACKS, ADD_TRACKS } from './types';
 
-const setSongs = songs => dispatch =>
+const setTracks = songs => dispatch =>
   dispatch({
-    type: SET_SONGS,
+    type: SET_TRACKS,
     payload: songs,
   });
 
-const addSongs = songs => dispatch =>
+const addTracks = songs => dispatch =>
   dispatch({
-    type: ADD_SONGS,
+    type: ADD_TRACKS,
     payload: songs,
   });
 
-const setLoading = loading => dispatch =>
-  dispatch({
-    type: SET_LOADING,
-    payload: loading,
-  });
+export { addTracks, setTracks };
