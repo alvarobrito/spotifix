@@ -1,6 +1,8 @@
 import { normalize } from 'normalizr';
 import spotifyApi from '@/utils/spotify.api';
-import schema from '@/modules/entities/schema';
+import schema from '@/modules/schema';
+import { addArtists } from '@/modules/old/artists';
+import { addAlbums } from '@/modules/old/albums';
 import {
   ADD_TRACKS as SEARCH_ADD_TRACKS,
   RESET_TRACKS,
@@ -9,10 +11,6 @@ import {
   SET_LOADING,
 } from './types';
 import { ADD_TRACKS } from '../tracks/types';
-import { addArtists } from '../entities/artists';
-import { addAlbums } from '../entities/albums';
-
-
 
 const normalizeTracks = tracks =>
   (tracks
@@ -73,9 +71,9 @@ const setFetchedData = dispatch => items => {
   .reduce((prev, next) => {
     return [...prev, ...next.artists];
   }, [])
-  dispatch(addArtists(normalize(artists, [schema.artists])));
+  dispatch(addArtists(normalize(artists, [schema.entity.artist])));
 
-  dispatch(addAlbums(normalize(albums, [schema.albums])));
+  dispatch(addAlbums(normalize(albums, [schema.entity.album])));
 };
 
 const getTracks = (dispatch, getState) => {

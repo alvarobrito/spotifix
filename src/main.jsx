@@ -11,6 +11,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import authRedirectMiddleware from '@/middlewares/auth';
 import reducers from '@/modules';
+import old from '@/modules/old';
 import sections from '@/modules/sections';
 import entities from '@/modules/entities';
 import Routes from './routes';
@@ -25,13 +26,14 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   combineReducers({
+    old,
     sections,
     entities,
     ...reducers,
     router: routerReducer,
   }),
   composeEnhancers(
-    applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk),
+    applyMiddleware(middlewareRouter, authRedirectMiddleware, thunk, logger),
   ),
 );
 

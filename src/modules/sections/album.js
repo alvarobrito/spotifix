@@ -1,8 +1,8 @@
 import { normalize } from 'normalizr';
-import schema from '@/modules/entities/schema';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import { addAlbums } from '@/modules/entities/albums';
+import { mergeEntities } from '@/modules/entities';
+import schema from '@/modules/schema';
 
 // Actions
 const LOADING = 'section/album/LOADING';
@@ -10,7 +10,7 @@ const SET = 'section/album/SET';
 
 // Initial State
 const INIT_STATE = {
-  selectedAlbum: '',
+  selected: '',
   images: [{
     width: 'auto',
     height: 'auto',
@@ -45,20 +45,18 @@ export const setLoading = loading => ({
   payload: loading,
 });
 
-export const setAlbum = artist => ({
+export const setAlbum = album => ({
   type: SET,
-  payload: artist,
+  payload: album,
 });
 
 // side effects
 export const fetchAlbum = albumId => (dispatch) => {
   dispatch(setLoading(true));
-  spotifyApi.getAlbum(albumId, (error, { id, name, label, images, tracks: { items: tracks } }) => {
-    dispatch(setAlbum({
-      selectedAlbum: albumId,
-      tracks: tracks.map(t => t.id),
-    }));
-    dispatch(addAlbums(normalize([{ id, name, label, images }], [schema.albums])));
+  spotifyApi.getAlbum(albumId, (error, { id, tracks: { items: tracks } }) => {
+    const normalized = normalize({ selected: id, tracks }, schema.section.artist);
+    dispatch(mergeEntities(normalized.entities));
+    dispatch(setAlbum(normalized.result));
     dispatch(setLoading(false));
   });
 };

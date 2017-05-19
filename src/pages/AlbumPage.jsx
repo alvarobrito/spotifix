@@ -22,7 +22,6 @@ class AlbumPage extends Component {
 
   render() {
     const { album, loading } = this.props;
-    console.log('album', album);
     return (
       <div>
         {(!loading) && (

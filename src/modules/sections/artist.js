@@ -1,9 +1,8 @@
 import { normalize } from 'normalizr';
-import schema from '@/modules/entities/schema';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import { addAlbums } from '@/modules/entities/albums';
-import { addArtists } from '@/modules/entities/artists';
+import { mergeEntities } from '@/modules/entities';
+import schema from '@/modules/schema';
 
 // Actions
 const LOADING = 'section/artist/LOADING';
@@ -11,7 +10,7 @@ const SET = 'section/artist/SET';
 
 // Initial State
 const INIT_STATE = {
-  selectedArtist: '',
+  selected: '',
   albums: [],
   topTracks: [],
   relatedArtists: [],
@@ -50,7 +49,7 @@ export const setArtist = artist => ({
 
 // side effects
 async function fetchArtist(artistId) {
-  const [{ id, name, images }, { items: albums }, { tracks: topTracks }, { artists: relatedArtists }]
+  const [selected, { items: albums }, { tracks: topTracks }, { artists: relatedArtists }]
   = await Promise.all([
     spotifyApi.getArtist(artistId),
     spotifyApi.getArtistAlbums(artistId),
@@ -59,7 +58,7 @@ async function fetchArtist(artistId) {
   ]);
 
   return {
-    artist: { id, name, images },
+    selected,
     albums,
     topTracks,
     relatedArtists,
@@ -68,15 +67,9 @@ async function fetchArtist(artistId) {
 
 export const getArtist = artistId => async (dispatch) => {
   dispatch(setLoading(true));
-  const { artist, albums, topTracks, relatedArtists } = await fetchArtist(artistId);
-  dispatch(addArtists(normalize([...relatedArtists, ...[artist]], [schema.artists])));
-  dispatch(setArtist({
-    selectedArtist: artistId,
-    albums: albums.map(a => a.id),
-    topTracks: topTracks.map(t => t.id),
-    relatedArtists: relatedArtists.map(r => r.id),
-  }));
-  dispatch(addAlbums(normalize(albums, [schema.albums])));
-  // dispatch(setTracks(topTracks));
+  const data = await fetchArtist(artistId);
+  const normalized = normalize({ ...data }, schema.section.artist);
+  dispatch(mergeEntities(normalized.entities));
+  dispatch(setArtist(normalized.result));
   dispatch(setLoading(false));
 };

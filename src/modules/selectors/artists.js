@@ -1,16 +1,16 @@
 import { createSelector } from 'reselect';
 
-// Selectors
+// mini-selectors
+const getArtists = state =>
+  state.entities.artists;
+
 const getRelatedArtists = state =>
   state.sections.artist.relatedArtists;
 
-const getArtists = state =>
-  state.entities.artists.byId;
-
 const selectedArtist = state =>
-  state.sections.artist.selectedArtist;
+  state.sections.artist.selected;
 
-// TODO memoize combinedselector getAlbums new Selector => (selectAlbums(ids)
+// selector creators
 const selectRelatedArtists = createSelector(
   [getRelatedArtists, getArtists],
   (artistIds, artists) => artistIds.map(a => artists[a]),

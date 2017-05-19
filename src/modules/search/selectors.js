@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 const getTracks = state => state.tracks.byId;
-const getArtists = state => state.entities.artists.byId;
-const getAlbums = state => state.entities.albums.byId;
+const getArtists = state => state.old.artists.byId;
+const getAlbums = state => state.old.albums.byId;
 
 const getSearchTracksIds = state => state.search.tracksIds;
 
