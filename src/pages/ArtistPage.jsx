@@ -5,13 +5,14 @@ import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 // Modules
 import { getArtist } from '@/modules/sections/artist';
+import { selectToptracks } from '@/modules/selectors/tracks';
 import { selectArtistAlbums } from '@/modules/selectors/albums';
 import { selectArtist, selectRelatedArtists } from '@/modules/selectors/artists';
 
 // Components
 import Albums from '@/components/Albums';
 import Related from '@/components/Related';
-// import SongList from '@/components/SongList';
+import SongList from '@/components/SongList';
 import Spinner from '@/components/ui/Spinner';
 
 class ArtistPage extends Component {
@@ -27,7 +28,7 @@ class ArtistPage extends Component {
   }
 
   render() {
-    const { loading, albums, artist, relatedArtists } = this.props;
+    const { loading, albums, artist, relatedArtists, topTracks } = this.props;
     return (
       <div>
         {(!loading) && (
@@ -40,8 +41,8 @@ class ArtistPage extends Component {
             <CardText>
               <h3>Albums</h3>
               <Albums albums={albums} />
-              {/* <h3>Top tracks</h3>
-              <SongList songs={artist.topTracks} />*/}
+              <h3>Top tracks</h3>
+              <SongList songs={topTracks} />
               <h3>Related artists</h3>
               <Related artists={relatedArtists} />
             </CardText>
@@ -60,6 +61,7 @@ ArtistPage.propTypes = {
   artist: PropTypes.object.isRequired,
   albums: PropTypes.arrayOf(PropTypes.object).isRequired,
   relatedArtists: PropTypes.arrayOf(PropTypes.object).isRequired,
+  topTracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   artistId: PropTypes.string.isRequired,
   getArtist: PropTypes.func.isRequired,
 };
@@ -80,6 +82,7 @@ ArtistPage.defaultProps = {
 const mapStateToProps = (state, { match: { params: { artistId } } }) => ({
   albums: selectArtistAlbums(state),
   relatedArtists: selectRelatedArtists(state),
+  topTracks: selectToptracks(state),
   artist: selectArtist(state),
   loading: state.sections.artist.loading,
   artistId,

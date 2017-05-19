@@ -9,7 +9,7 @@ entity.album = new schema.Entity('albums', {
   artists: [entity.artist],
 });
 
-entity.track = new schema.Entity('track', {
+entity.track = new schema.Entity('tracks', {
   albums: [entity.album],
 });
 
