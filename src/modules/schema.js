@@ -1,7 +1,7 @@
 import { schema } from 'normalizr';
 
 // entities
-const entity = {};
+const entity = {}; // TODO
 
 entity.artist = new schema.Entity('artists');
 
@@ -10,7 +10,8 @@ entity.album = new schema.Entity('albums', {
 });
 
 entity.track = new schema.Entity('tracks', {
-  albums: [entity.album],
+  album: entity.album,
+  artists: [entity.artist],
 });
 
 // sections
@@ -24,6 +25,12 @@ const section = {
   album: new schema.Object({
     selected: entity.album,
     tracks: [entity.track],
+  }),
+  search: new schema.Object({
+    // searchInput: '',
+    tracks: [entity.track],
+    // offset: 0,
+    // selectedTracks: [entity.track],
   }),
 };
 

@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import SongList from '@/components/SongList';
 import Search from '@/components/Search';
-import { fetchSongs, fetchMoreSongs } from '@/modules/search/actions';
-import { getSearchTracks } from '@/modules/search/selectors';
+import { fetchSongs, fetchMoreSongs } from '@/modules/sections/search';
+import { getSearchTracks } from '@/modules/selectors/search';
 
 const SearchContainer = ({ onSearchChange, addMoreSongs, searchInput, loading, tracks }) => (
   <div className="search-wrapper">
