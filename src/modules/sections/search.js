@@ -2,7 +2,7 @@ import { normalize } from 'normalizr';
 import spotifyApi from '@/utils/spotify.api';
 import { mergeEntities } from '@/modules/entities';
 import schema from '@/modules/schema';
-import { createReducer } from '../../utils/reducers.utils';
+import { createReducer } from '@/utils/reducers.utils';
 
 // Types
 const ADD_TRACKS = 'search/ADD_TRACKS';
@@ -38,7 +38,7 @@ export default createReducer(INIT_STATE, {
     });
   },
 
-  [RESET_TRACKS](state, payload) {
+  [RESET_TRACKS](state) {
     return Object.assign({}, state, {
       tracks: [],
       offset: 0,
@@ -123,7 +123,7 @@ const setFetchedData = dispatch => (items) => {
 };
 
 const getTracks = (dispatch, getState) => {
-  const { search: { searchInput, offset } } = getState();
+  const { sections: { search: { searchInput, offset } } } = getState();
   dispatch(setLoading(true));
 
   spotifyApi.searchTracks(searchInput, { offset })
@@ -145,7 +145,7 @@ export const fetchSongs = searchInput => (dispatch, getState) => {
     return;
   }
 
-  const { search: { searchInput: currentSearchInput } } = getState();
+  const { sections: { search: { searchInput: currentSearchInput } } } = getState();
 
   if (currentSearchInput === searchInput) return;
 

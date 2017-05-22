@@ -35,8 +35,7 @@ SearchContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { search: { searchInput, loading } } = state;
-
+  const { sections: { search: { searchInput, loading } } } = state;
   return {
     searchInput,
     loading,

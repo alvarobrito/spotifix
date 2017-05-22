@@ -1,7 +1,7 @@
-import search from './search/reducers';
-import tracks from './tracks/reducers';
+import entities from './entities';
+import sections from './sections';
 
 export default {
-  tracks,
-  search,
+  entities,
+  sections,
 };
