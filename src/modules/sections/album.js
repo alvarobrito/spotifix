@@ -3,30 +3,35 @@ import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
 import { mergeEntities } from '@/modules/entities';
 import schema from '@/modules/schema';
+import merge from 'lodash/fp/merge';
 
 // Actions
-const LOADING = 'section/album/LOADING';
+const ADD = 'section/album/ADD';
 const SET = 'section/album/SET';
+const LOADING = 'section/album/LOADING';
 
 // Initial State
 const INIT_STATE = {
   selected: '',
-  images: [{
-    width: 'auto',
-    height: 'auto',
-    url: '',
-  }],
-  tracks: [],
+  albums: {},
   loading: false,
 };
 
 // Reducer
 export default createReducer(INIT_STATE, {
 
+  [ADD](state, payload) {
+    return {
+      ...state,
+      selected: payload.id,
+      albums: merge(state.albums, { [payload.id]: payload }),
+    };
+  },
+
   [SET](state, payload) {
     return {
       ...state,
-      ...payload,
+      selected: payload,
     };
   },
 
@@ -40,23 +45,34 @@ export default createReducer(INIT_STATE, {
 });
 
 // Action Creators
+export const addAlbum = album => ({
+  type: ADD,
+  payload: album,
+});
+
+export const setAlbum = albumId => ({
+  type: SET,
+  payload: albumId,
+});
+
 export const setLoading = loading => ({
   type: LOADING,
   payload: loading,
 });
 
-export const setAlbum = album => ({
-  type: SET,
-  payload: album,
-});
-
 // side effects
-export const fetchAlbum = albumId => (dispatch) => {
-  dispatch(setLoading(true));
-  spotifyApi.getAlbum(albumId, (error, { id, tracks: { items: tracks } }) => {
-    const normalized = normalize({ selected: id, tracks }, schema.section.artist);
-    dispatch(mergeEntities(normalized.entities));
-    dispatch(setAlbum(normalized.result));
-    dispatch(setLoading(false));
-  });
+export const fetchAlbum = albumId => (dispatch, getState) => {
+  const album = getState().sections.album.albums[albumId];
+
+  if (album) {
+    dispatch(setAlbum(albumId));
+  } else {
+    dispatch(setLoading(true));
+    spotifyApi.getAlbum(albumId, (error, { id, name, label, images, artists, tracks: { items: tracks } }) => {
+      const normalized = normalize({ id: { id, name, label, images }, artists, tracks }, schema.section.album);
+      dispatch(mergeEntities(normalized.entities));
+      dispatch(addAlbum(normalized.result));
+      dispatch(setLoading(false));
+    });
+  }
 };

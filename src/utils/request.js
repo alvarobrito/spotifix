@@ -1,7 +1,7 @@
 import config from '@/config';
 
 function request({ url, options = {} }) {
-  var myRequest = new Request(url, options);
+  const myRequest = new Request(url, options);
   return fetch(myRequest).then((response) => {
     if (response.ok) {
       return response;

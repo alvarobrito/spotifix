@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
-import { selectAlbum } from '@/modules/selectors/albums';
+import { getSelectedAlbum } from '@/modules/selectors/section';
 import { fetchAlbum } from '@/modules/sections/album';
 import Spinner from '@/components/ui/Spinner';
 // import SongList from '@/components/SongList';
@@ -67,7 +67,7 @@ AlbumPage.defaultProps = {
 
 // Redux connector
 const mapStateToProps = (state, { match: { params: { albumId } } }) => ({
-  album: selectAlbum(state),
+  album: getSelectedAlbum(state),
   loading: state.sections.album.loading,
   albumId,
 });

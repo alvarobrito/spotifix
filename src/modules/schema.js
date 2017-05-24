@@ -7,6 +7,7 @@ entity.artist = new schema.Entity('artists');
 
 entity.album = new schema.Entity('albums', {
   artists: [entity.artist],
+  tracks: [entity.track],
 });
 
 entity.track = new schema.Entity('tracks', {
@@ -14,24 +15,31 @@ entity.track = new schema.Entity('tracks', {
   artists: [entity.artist],
 });
 
+entity.artistSection = new schema.Entity('artistSection', {
+  relatedArtists: [entity.artist],
+  albums: [entity.album],
+  topTracks: [entity.track],
+});
+
 // sections
 const section = {
-  artist: new schema.Object({
-    selected: entity.artist,
+  artist: {
+    id: entity.artist,
     relatedArtists: [entity.artist],
     albums: [entity.album],
     topTracks: [entity.track],
-  }),
-  album: new schema.Object({
-    selected: entity.album,
+  },
+  album: {
+    id: entity.album,
     tracks: [entity.track],
-  }),
-  search: new schema.Object({
+    artists: [entity.artist],
+  },
+  search: {
     // searchInput: '',
     tracks: [entity.track],
     // offset: 0,
     // selectedTracks: [entity.track],
-  }),
+  },
 };
 
 export default { section, entity };
