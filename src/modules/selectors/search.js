@@ -29,14 +29,14 @@ export const getSearchTracks = createDeepEqualSelector(
   .reduce(mapFiltered(
     trackId => tracks[trackId] && albums[tracks[trackId].album],
     trackId => {
-    return {
-      ...tracks[trackId],
-      album: albums[tracks[trackId].album],
-      artists: tracks[trackId].artists
-        .reduce(mapFiltered(
-          artistId => artists[artistId],
-          artistId => artists[artistId]), []
-        ),
-    };
-  }), []),
+      return {
+        ...tracks[trackId],
+        album: albums[tracks[trackId].album],
+        artists: tracks[trackId].artists
+          .reduce(mapFiltered(
+            artistId => artists[artistId],
+            artistId => artists[artistId]), [],
+          ),
+      };
+    }), []),
 );
