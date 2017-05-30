@@ -1,24 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
+import withFetchOnScroll from '@/components/hoc/withFetchOnScroll';
 import SongList from '@/components/SongList';
 import Search from '@/components/Search';
 import { fetchSongs, fetchMoreSongs } from '@/modules/sections/search';
 import { getSearchTracks } from '@/modules/selectors/search';
 
-const SearchContainer = ({ onSearchChange, addMoreSongs, searchInput, loading, tracks }) => (
+const SearchContainer = ({ onSearchChange, loading, tracks }) => (
   <div className="search-wrapper">
     <Search onChange={(event, searchInputNow) => onSearchChange(searchInputNow)} />
     <SongList songs={tracks} />
     <div>
-      {(tracks.length > 0) && (
-        <RaisedButton
-          label="More"
-          onClick={() => addMoreSongs(searchInput)}
-        />
-      )}
       {(loading) && (
         <LinearProgress />
       )}
@@ -28,10 +22,8 @@ const SearchContainer = ({ onSearchChange, addMoreSongs, searchInput, loading, t
 
 SearchContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
-  searchInput: PropTypes.string.isRequired,
   tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSearchChange: PropTypes.func.isRequired,
-  addMoreSongs: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -45,7 +37,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   onSearchChange: fetchSongs,
-  addMoreSongs: fetchMoreSongs,
+  scrollFunction: fetchMoreSongs,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withFetchOnScroll(SearchContainer));

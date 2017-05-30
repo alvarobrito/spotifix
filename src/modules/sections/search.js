@@ -71,20 +71,6 @@ export default createReducer(INIT_STATE, {
 });
 
 // Action Creators
-const normalizeTracks = tracks =>
-  (tracks
-  .reduce((prev, { id, name, artists, album }) =>
-    ({
-      ...prev,
-      [id]: {
-        id,
-        name,
-        artists: artists.map(artist => artist.id),
-        album: album.id,
-      },
-    }),
-    {})
-  );
 
 export const addSearchTracks = ({ entities, result }) => (dispatch) => {
   dispatch({
