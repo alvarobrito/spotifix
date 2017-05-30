@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
-import { getSelectedAlbum } from '@/modules/selectors/section';
+import { getSelectedAlbum, getAlbumTracks } from '@/modules/selectors/section';
 import { fetchAlbum } from '@/modules/sections/album';
 import Spinner from '@/components/ui/Spinner';
-// import SongList from '@/components/SongList';
+import SongList from '@/components/SongList';
 
 class AlbumPage extends Component {
 
@@ -21,7 +21,7 @@ class AlbumPage extends Component {
   }
 
   render() {
-    const { album, loading } = this.props;
+    const { album, tracks, loading } = this.props;
     return (
       <div>
         {(!loading) && (
@@ -33,7 +33,7 @@ class AlbumPage extends Component {
           />
           <CardText>
             <h3>Tracks</h3>
-            {/* <SongList songs={album.tracks} /> */}
+            <SongList songs={tracks} />
           </CardText>
         </Card>
         )}
@@ -48,6 +48,7 @@ class AlbumPage extends Component {
 AlbumPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   album: PropTypes.object.isRequired,
+  tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   albumId: PropTypes.string.isRequired,
   fetchAlbum: PropTypes.func.isRequired,
 };
@@ -68,6 +69,7 @@ AlbumPage.defaultProps = {
 // Redux connector
 const mapStateToProps = (state, { match: { params: { albumId } } }) => ({
   album: getSelectedAlbum(state),
+  tracks: getAlbumTracks(state),
   loading: state.sections.album.loading,
   albumId,
 });

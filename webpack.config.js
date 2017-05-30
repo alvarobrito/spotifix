@@ -1,5 +1,7 @@
+const request = require('request');
 const path = require('path');
 const webpack = require('webpack'); // eslint-disable-line import/no-extraneous-dependencies
+const config = require('./src/config');
 
 const resolve = dir => path.join(__dirname, './', dir);
 const SOURCE_PATH = resolve('src');
@@ -71,8 +73,24 @@ module.exports = {
     inline: true,
     hot: true,
     setup: (app) => {
-      // middlewares
-      // app.get('/login', (req, res) => {});
+      app.get('/login', (req, res) => {
+        const authOptions = {
+          url: config.spotify.accounts.token,
+          headers: {
+            'Authorization': 'Basic ' + (new Buffer(`${config.spotify.clientId}:${config.spotify.clientSecret}`).toString('base64')),
+          },
+          form: {
+            grant_type: 'client_credentials',
+          },
+          json: true,
+        };
+
+        request.post(authOptions, (error, response, body) => {
+          if (!error && response.statusCode === 200) {
+            res.redirect(`/?token=${body.access_token}`);
+          }
+        });
+      });
     },
     stats: {
       assets: true,

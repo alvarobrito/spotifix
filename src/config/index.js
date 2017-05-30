@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   spotify: {
     clientId: '7afafb6c27a84b27a229e2ba0b8432dd',
     clientSecret: '461ca36860be4b1fb7907ad06ec262ff',

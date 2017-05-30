@@ -1,13 +1,12 @@
 import { normalize } from 'normalizr';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import { mergeEntities } from '@/modules/entities';
 import schema from '@/modules/schema';
 import merge from 'lodash/fp/merge';
 
 // Actions
 const ADD = 'section/artist/ADD';
-const SET = 'section/artist/SET';
+const SELECT = 'section/artist/SELECT';
 const LOADING = 'section/artist/LOADING';
 
 // Initial State
@@ -23,12 +22,11 @@ export default createReducer(INIT_STATE, {
   [ADD](state, payload) {
     return {
       ...state,
-      selected: payload.id,
-      artists: merge(state.artists, { [payload.id]: payload }),
+      artists: merge(state.artists, payload),
     };
   },
 
-  [SET](state, payload) {
+  [SELECT](state, payload) {
     return {
       ...state,
       selected: payload,
@@ -45,13 +43,16 @@ export default createReducer(INIT_STATE, {
 });
 
 // Action Creators
-export const addArtist = artist => ({
+export const addArtist = ({ entities, result }, artistId) => ({
   type: ADD,
-  payload: artist,
+  entities,
+  payload: {
+    [artistId]: result,
+  },
 });
 
-export const setArtist = artistId => ({
-  type: SET,
+export const selectArtist = artistId => ({
+  type: SELECT,
   payload: artistId,
 });
 
@@ -62,7 +63,7 @@ export const setLoading = loading => ({
 
 // side effects
 async function fetchArtist(artistId) {
-  const [{ id, name, images }, { items: albums }, { tracks: topTracks }, { artists: relatedArtists }]
+  const [id, { items: albums }, { tracks: topTracks }, { artists: relatedArtists }]
   = await Promise.all([
     spotifyApi.getArtist(artistId),
     spotifyApi.getArtistAlbums(artistId),
@@ -71,7 +72,7 @@ async function fetchArtist(artistId) {
   ]);
 
   return {
-    id: { id, name, images },
+    id,
     albums,
     topTracks,
     relatedArtists,
@@ -80,15 +81,15 @@ async function fetchArtist(artistId) {
 
 // TODO https://github.com/rwieruch/favesound-redux/blob/e7077a66dc3b7b8ada7bced560c2ae64535759c0/src/actions/comments/index.js#L46
 export const getArtist = artistId => async (dispatch, getState) => {
-  const artist = getState().sections.artist.artists[artistId];
+  const artistSection = getState().sections.artist.artists[artistId];
 
-  if (artist) {
-    dispatch(setArtist(artistId));
+  if (artistSection) {
+    dispatch(selectArtist(artistId));
   } else {
     dispatch(setLoading(true));
-    const normalized = normalize({ ...await fetchArtist(artistId) }, schema.section.artist);
-    dispatch(mergeEntities(normalized.entities));
-    dispatch(addArtist(normalized.result));
+    const normalized = normalize(await fetchArtist(artistId), schema.section.artist);
+    dispatch(addArtist(normalized, artistId));
+    dispatch(selectArtist(artistId));
     dispatch(setLoading(false));
   }
 };

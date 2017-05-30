@@ -86,10 +86,11 @@ const normalizeTracks = tracks =>
     {})
   );
 
-export const addSearchTracks = tracks => (dispatch) => {
+export const addSearchTracks = ({ entities, result }) => (dispatch) => {
   dispatch({
     type: ADD_TRACKS,
-    payload: tracks,
+    entities,
+    payload: result.tracks,
   });
 };
 
@@ -117,9 +118,7 @@ const setLoading = loading => dispatch =>
 
 const setFetchedData = dispatch => (items) => {
   const normalized = normalize({ tracks: items }, schema.section.search);
-
-  dispatch(mergeEntities(normalized.entities));
-  dispatch(addSearchTracks(normalized.result.tracks));
+  dispatch(addSearchTracks(normalized));
 };
 
 const getTracks = (dispatch, getState) => {

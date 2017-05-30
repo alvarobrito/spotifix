@@ -29,6 +29,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
+    "request": "^2.81.0",
     "reselect": "^3.0.0",
     "shortid": "^2.2.8",
     "spotify-web-api-js": "^0.21.2"

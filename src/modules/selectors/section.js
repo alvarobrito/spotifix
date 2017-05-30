@@ -46,6 +46,11 @@ const getSelectedArtist = createSelector(
   (artistId, artists) => artists[artistId],
 );
 
+const getAlbumTracks = createSelector(
+  [getSelectedAlbumSection, albumsEntity, tracksEntity],
+  (album, albums, tracks) => album.id && hasOwnProperty(albums[album.id], 'tracks') ? albums[album.id].tracks.map(a => tracks[a]) : [],
+);
+
 const getSelectedAlbum = createSelector(
   [selectedAlbum, albumsEntity],
   (albumId, albums) => albums[albumId],
@@ -57,4 +62,5 @@ export {
   getRelatedArtists,
   getArtistAlbums,
   getArtistTopTracks,
+  getAlbumTracks,
 };
