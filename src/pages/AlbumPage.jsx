@@ -47,7 +47,12 @@ class AlbumPage extends Component {
 // PropTypes validation
 AlbumPage.propTypes = {
   loading: PropTypes.bool.isRequired,
-  album: PropTypes.object.isRequired,
+  album: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    images: PropTypes.array,
+  }).isRequired,
   tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   albumId: PropTypes.string.isRequired,
   fetchAlbum: PropTypes.func.isRequired,
@@ -64,6 +69,8 @@ AlbumPage.defaultProps = {
       url: '',
     }],
   },
+  tracks: [],
+  albumId: '',
 };
 
 // Redux connector

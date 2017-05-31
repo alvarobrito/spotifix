@@ -19,6 +19,7 @@ const artistSchema = new schema.Entity('artists', {}, {
   processStrategy: ({ id, name, images }) =>
     ({ id, name, images }),
 });
+
 const albumSchema = new schema.Entity('albums', {}, {
   processStrategy: ({ id, name, label, images, artists, tracks }) => {
     if (tracks) return { id, name, label, images, artists, tracks: withAlbum(id)(tracks) };

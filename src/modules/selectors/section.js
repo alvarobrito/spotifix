@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { hasOwnProperty } from '@/utils/reducers.utils';
 import { artistsEntity, albumsEntity, tracksEntity } from './entities';
 
 // selectors
@@ -16,29 +15,16 @@ const selectedAlbum = state =>
   state.sections.album.selected;
 
 // selector creators
+
+// TODO Memoize selected element
 const getSelectedAlbumSection = createSelector(
   [albumsSection, selectedAlbum],
-  (albums, albumId) => albums[albumId] || {},
+  (albums, albumId) => albums[albumId],
 );
 
 const getSelectedArtistSection = createSelector(
   [artistsSection, selectedArtist],
-  (artists, artistId) => artists[artistId] || {},
-);
-
-const getRelatedArtists = createSelector(
-  [getSelectedArtistSection, artistsEntity],
-  (artist, relatedArtists) => hasOwnProperty(artist, 'relatedArtists') ? artist.relatedArtists.map(a => relatedArtists[a]) : [],
-);
-
-const getArtistAlbums = createSelector(
-  [getSelectedArtistSection, albumsEntity],
-  (artist, albums) => hasOwnProperty(artist, 'albums') ? artist.albums.map(a => albums[a]) : [],
-);
-
-const getArtistTopTracks = createSelector(
-  [getSelectedArtistSection, tracksEntity],
-  (artist, topTracks) => hasOwnProperty(artist, 'albums') ? artist.topTracks.map(a => topTracks[a]) : [],
+  (artists, artistId) => artists[artistId],
 );
 
 const getSelectedArtist = createSelector(
@@ -46,14 +32,37 @@ const getSelectedArtist = createSelector(
   (artistId, artists) => artists[artistId],
 );
 
-const getAlbumTracks = createSelector(
-  [getSelectedAlbumSection, albumsEntity, tracksEntity],
-  (album, albums, tracks) => album.id && hasOwnProperty(albums[album.id], 'tracks') ? albums[album.id].tracks.map(a => tracks[a]) : [],
-);
-
 const getSelectedAlbum = createSelector(
   [selectedAlbum, albumsEntity],
   (albumId, albums) => albums[albumId],
+);
+
+const getRelatedArtists = createSelector(
+  [getSelectedArtistSection, artistsEntity],
+  (artist, artists) => artist && artist.relatedArtists && artist.relatedArtists.map(a => artists[a]),
+);
+
+const getArtistTopTracks = createSelector(
+  [getSelectedArtistSection, tracksEntity],
+  (artist, tracks) => artist && artist.topTracks && artist.topTracks.map(a => tracks[a]),
+);
+
+const getArtistAlbums = createSelector(
+  [getSelectedArtistSection, albumsEntity],
+  (artist, albums) => artist && artist.albums && artist.albums.map(a => albums[a]),
+);
+
+const getAlbumTracks = createSelector(
+  [getSelectedAlbum, tracksEntity, artistsEntity],
+  (album, tracks, artists) =>
+    album && album.tracks && album.tracks.reduce((acc, val) =>
+      acc.concat({
+        ...tracks[val],
+        album: {
+          name: album.name,
+        },
+        artists: album.artists.map(a => artists[a]),
+      }), []),
 );
 
 export {

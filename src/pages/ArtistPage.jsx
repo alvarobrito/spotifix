@@ -56,7 +56,11 @@ class ArtistPage extends Component {
 // PropTypes validation
 ArtistPage.propTypes = {
   loading: PropTypes.bool.isRequired,
-  artist: PropTypes.object.isRequired,
+  artist: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    images: PropTypes.array,
+  }).isRequired,
   albums: PropTypes.arrayOf(PropTypes.object).isRequired,
   relatedArtists: PropTypes.arrayOf(PropTypes.object).isRequired,
   topTracks: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -74,6 +78,9 @@ ArtistPage.defaultProps = {
       url: '',
     }],
   },
+  albums: [],
+  relatedArtists: [],
+  topTracks: [],
 };
 
 // Redux connector
