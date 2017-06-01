@@ -5,7 +5,7 @@ import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 // Modules
 import { getArtist } from '@/modules/sections/artist';
-import { getSelectedArtist, getRelatedArtists, getArtistAlbums, getArtistTopTracks } from '@/modules/selectors/section';
+import { getSelectedArtist, getRelatedArtists, getArtistAlbums, getArtistTopTracks } from '@/modules/sections/artist/selectors';
 
 // Components
 import Albums from '@/components/Albums';

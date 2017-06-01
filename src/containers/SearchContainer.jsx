@@ -6,7 +6,7 @@ import withFetchOnScroll from '@/components/hoc/withFetchOnScroll';
 import SongList from '@/components/SongList';
 import Search from '@/components/Search';
 import { fetchSongs, fetchMoreSongs } from '@/modules/sections/search';
-import { getSearchTracks } from '@/modules/selectors/search';
+import { getSearchTracks } from '@/modules/sections/search/selectors';
 
 const SearchContainer = ({ onSearchChange, loading, tracks }) => (
   <div className="search-wrapper">

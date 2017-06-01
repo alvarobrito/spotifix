@@ -1,5 +1,6 @@
-import { createSelectorCreator, defaultMemoize } from 'reselect';
 import { isEqual } from 'lodash';
+import { createSelectorCreator, defaultMemoize } from 'reselect';
+import { getArtists, getAlbums, getTracks } from '@/modules/entities/selectors';
 
 // Create a "selector creator" that uses lodash.isEqual instead of ===
 const createDeepEqualSelector = createSelectorCreator(
@@ -13,11 +14,6 @@ const mapFiltered = (filterCondition, mapHandler) => (prev, next) => {
 
   return [...prev, mapHandler(next)];
 };
-
-// Entities
-const getTracks = state => state.entities.tracks;
-const getArtists = state => state.entities.artists;
-const getAlbums = state => state.entities.albums;
 
 // Sections
 const getSearchTracksIds = state => state.sections.search.tracks;

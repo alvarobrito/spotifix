@@ -1,8 +1,8 @@
 import { normalize } from 'normalizr';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import schema from '@/modules/schema';
 import merge from 'lodash/fp/merge';
+import { albumSchema } from '@/modules/entities';
 
 // Actions
 const ADD = 'section/album/ADD';
@@ -15,6 +15,12 @@ const INIT_STATE = {
   albums: {},
   loading: false,
 };
+
+// Schema
+export const sectionSchema = {
+  id: albumSchema,
+};
+
 
 // Reducer
 export default createReducer(INIT_STATE, {
@@ -70,7 +76,7 @@ export const fetchAlbum = albumId => (dispatch, getState) => {
   } else {
     dispatch(setLoading(true));
     spotifyApi.getAlbum(albumId, (error, album) => {
-      const normalized = normalize({ id: album }, schema.section.album);
+      const normalized = normalize({ id: album }, sectionSchema);
       dispatch(addAlbum(normalized, albumId));
       dispatch(selectAlbum(albumId));
       dispatch(setLoading(false));

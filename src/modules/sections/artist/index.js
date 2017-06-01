@@ -1,8 +1,8 @@
 import { normalize } from 'normalizr';
 import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import schema from '@/modules/schema';
 import merge from 'lodash/fp/merge';
+import { trackSchema, albumSchema, artistSchema } from '@/modules/entities';
 
 // Actions
 const ADD = 'section/artist/ADD';
@@ -14,6 +14,14 @@ const INIT_STATE = {
   selected: '',
   artists: {},
   loading: false,
+};
+
+// Schema
+export const sectionSchema = {
+  id: artistSchema,
+  albums: [albumSchema],
+  topTracks: [trackSchema],
+  relatedArtists: [artistSchema],
 };
 
 // Reducer
@@ -79,6 +87,7 @@ async function fetchArtist(artistId) {
   };
 }
 
+// side effects
 // TODO https://github.com/rwieruch/favesound-redux/blob/e7077a66dc3b7b8ada7bced560c2ae64535759c0/src/actions/comments/index.js#L46
 export const getArtist = artistId => async (dispatch, getState) => {
   const artistSection = getState().sections.artist.artists[artistId];
@@ -87,7 +96,7 @@ export const getArtist = artistId => async (dispatch, getState) => {
     dispatch(selectArtist(artistId));
   } else {
     dispatch(setLoading(true));
-    const normalized = normalize(await fetchArtist(artistId), schema.section.artist);
+    const normalized = normalize(await fetchArtist(artistId), sectionSchema);
     dispatch(addArtist(normalized, artistId));
     dispatch(selectArtist(artistId));
     dispatch(setLoading(false));

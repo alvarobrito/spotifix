@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
-import { getSelectedAlbum, getAlbumTracks } from '@/modules/selectors/section';
+import { getSelectedAlbum, getAlbumTracks } from '@/modules/sections/album/selectors';
 import { fetchAlbum } from '@/modules/sections/album';
 import Spinner from '@/components/ui/Spinner';
 import SongList from '@/components/SongList';

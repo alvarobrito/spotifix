@@ -1,10 +1,18 @@
+import merge from 'lodash/fp/merge';
 import { schema } from 'normalizr';
 
-// utils
+// Utils
 const withAlbum = albumId => tracks =>
   tracks.items.map(t => ({ ...t, album: albumId }));
 
-// entities
+// Initial State
+const INIT_STATE = {
+  artists: {},
+  albums: {},
+  tracks: {},
+};
+
+// Schema
 const trackSchema = new schema.Entity('tracks', {}, {
   processStrategy: ({ id, name, artists, album }) =>
     ({ id, name, artists, album }),
@@ -31,35 +39,18 @@ trackSchema.define({
   album: albumSchema,
   artists: [artistSchema],
 });
+
 albumSchema.define({
   artists: [artistSchema],
   tracks: [trackSchema],
 });
 
-// sections
-const section = {
-  artist: {
-    id: artistSchema,
-    albums: [albumSchema],
-    topTracks: [trackSchema],
-    relatedArtists: [artistSchema],
-  },
-  album: {
-    id: albumSchema,
-  },
-  search: {
-    // searchInput: '',
-    tracks: [trackSchema],
-    // offset: 0,
-    // selectedTracks: [trackSchema],
-  },
-};
+export { trackSchema, albumSchema, artistSchema };
 
-export default {
-  section,
-  entity: {
-    artist: artistSchema,
-    album: albumSchema,
-    track: trackSchema,
-  },
-};
+// Reducer
+export default function entities(state = INIT_STATE, action) {
+  if (action.entities) {
+    return merge(state, action.entities);
+  }
+  return state;
+}
