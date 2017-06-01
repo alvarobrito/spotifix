@@ -21,7 +21,7 @@ const INIT_STATE = {
 };
 
 // Schema
-export const searchSchema = {
+export const sectionSchema = {
   tracks: [trackSchema],
   // searchInput: '',
   // offset: 0,
@@ -109,7 +109,7 @@ const setLoading = loading => dispatch =>
   });
 
 const setFetchedData = dispatch => (items) => {
-  const normalized = normalize({ tracks: items }, searchSchema);
+  const normalized = normalize({ tracks: items }, sectionSchema);
   dispatch(addSearchTracks(normalized));
 };
 

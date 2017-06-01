@@ -21,7 +21,6 @@ export const sectionSchema = {
   id: albumSchema,
 };
 
-
 // Reducer
 export default createReducer(INIT_STATE, {
 
