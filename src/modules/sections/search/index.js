@@ -40,39 +40,49 @@ export default createReducer(INIT_STATE, {
       return [...prevIds, newId];
     }, state.tracks);
 
-    return Object.assign({}, state, {
+    return {
+      ...state,
       tracks: newTracksIds,
-    });
+    };
   },
 
   [RESET_TRACKS](state) {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       tracks: [],
       offset: 0,
       selectedTracks: [],
-    });
+    };
   },
 
   [SET_SEARCH_INPUT](state, payload) {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       searchInput: payload,
-    });
+    };
   },
 
   [SELECT_SONG](state, payload) {
     if (state.selectedTracks.indexOf(payload)) return state;
 
-    return Object.assign({}, state, {
+    return {
+      ...state,
       selectedTracks: [...state.selectedTracks].push(payload),
-    });
+    };
   },
 
   [ADD_OFFSET](state) {
-    return Object.assign({}, state, { offset: state.offset + 20 });
+    return {
+      ...state,
+      offset: state.offset + 20,
+    };
   },
 
   [SET_LOADING](state, payload) {
-    return Object.assign({}, state, { loading: payload });
+    return {
+      ...state,
+      loading: payload,
+    };
   },
 
 });
