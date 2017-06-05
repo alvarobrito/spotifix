@@ -1,27 +1,19 @@
-import { normalize } from 'normalizr';
-import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
 import merge from 'lodash/fp/merge';
-import { trackSchema, albumSchema, artistSchema } from '@/modules/entities';
 
 // Actions
-const ADD = 'section/artist/ADD';
-const SELECT = 'section/artist/SELECT';
-const LOADING = 'section/artist/LOADING';
+export const ADD = 'section/artist/ADD';
+export const GET = 'section/artist/GET';
+export const ERROR = 'section/artist/ERROR';
+export const SELECT = 'section/artist/SELECT';
+export const LOADING = 'section/artist/LOADING';
 
 // Initial State
 const INIT_STATE = {
   selected: '',
   artists: {},
   loading: false,
-};
-
-// Schema
-export const sectionSchema = {
-  id: artistSchema,
-  albums: [albumSchema],
-  topTracks: [trackSchema],
-  relatedArtists: [artistSchema],
+  error: {},
 };
 
 // Reducer
@@ -48,6 +40,13 @@ export default createReducer(INIT_STATE, {
     };
   },
 
+  [ERROR](state, payload) {
+    return {
+      ...state,
+      error: payload,
+    };
+  },
+
 });
 
 // Action Creators
@@ -69,36 +68,12 @@ export const setLoading = loading => ({
   payload: loading,
 });
 
-// side effects
-async function fetchArtist(artistId) {
-  const [id, { items: albums }, { tracks: topTracks }, { artists: relatedArtists }]
-  = await Promise.all([
-    spotifyApi.getArtist(artistId),
-    spotifyApi.getArtistAlbums(artistId),
-    spotifyApi.getArtistTopTracks(artistId, 'ES'),
-    spotifyApi.getArtistRelatedArtists(artistId),
-  ]);
+export const getArtist = artistId => ({
+  type: GET,
+  payload: artistId,
+});
 
-  return {
-    id,
-    albums,
-    topTracks,
-    relatedArtists,
-  };
-}
-
-// side effects
-// TODO https://github.com/rwieruch/favesound-redux/blob/e7077a66dc3b7b8ada7bced560c2ae64535759c0/src/actions/comments/index.js#L46
-export const getArtist = artistId => async (dispatch, getState) => {
-  const artistSection = getState().sections.artist.artists[artistId];
-
-  if (artistSection) {
-    dispatch(selectArtist(artistId));
-  } else {
-    dispatch(setLoading(true));
-    const normalized = normalize(await fetchArtist(artistId), sectionSchema);
-    dispatch(addArtist(normalized, artistId));
-    dispatch(selectArtist(artistId));
-    dispatch(setLoading(false));
-  }
-};
+export const throwError = error => ({
+  type: ERROR,
+  payload: error,
+});

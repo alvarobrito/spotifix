@@ -1,24 +1,19 @@
-import { normalize } from 'normalizr';
-import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
 import merge from 'lodash/fp/merge';
-import { albumSchema } from '@/modules/entities';
 
 // Actions
-const ADD = 'section/album/ADD';
-const SELECT = 'section/album/SELECT';
-const LOADING = 'section/album/LOADING';
+export const GET = 'section/album/GET';
+export const ERROR = 'section/album/ERROR';
+export const ADD = 'section/album/ADD';
+export const SELECT = 'section/album/SELECT';
+export const LOADING = 'section/album/LOADING';
 
 // Initial State
 const INIT_STATE = {
   selected: '',
   albums: {},
   loading: false,
-};
-
-// Schema
-export const sectionSchema = {
-  id: albumSchema,
+  error: {},
 };
 
 // Reducer
@@ -45,6 +40,13 @@ export default createReducer(INIT_STATE, {
     };
   },
 
+  [ERROR](state, payload) {
+    return {
+      ...state,
+      error: payload,
+    };
+  },
+
 });
 
 // Action Creators
@@ -66,19 +68,12 @@ export const setLoading = loading => ({
   payload: loading,
 });
 
-// side effects
-export const fetchAlbum = albumId => (dispatch, getState) => {
-  const albumSection = getState().sections.album.albums[albumId];
+export const getAlbum = albumId => ({
+  type: GET,
+  payload: albumId,
+});
 
-  if (albumSection) {
-    dispatch(selectAlbum(albumId));
-  } else {
-    dispatch(setLoading(true));
-    spotifyApi.getAlbum(albumId, (error, album) => {
-      const normalized = normalize({ id: album }, sectionSchema);
-      dispatch(addAlbum(normalized, albumId));
-      dispatch(selectAlbum(albumId));
-      dispatch(setLoading(false));
-    });
-  }
-};
+export const throwError = error => ({
+  type: ERROR,
+  payload: error,
+});

@@ -8,7 +8,7 @@ if (searchParams.has('token')) {
 } else if (!localStorage.getItem('token')) {
   document.location = '/login';
 }
-
+debugger;
 spotifyApi.setAccessToken(localStorage.getItem('token'));
 
 export default spotifyApi;

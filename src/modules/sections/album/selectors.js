@@ -10,17 +10,17 @@ const selectedAlbum = state =>
 
 // selector creators
 // TODO Memoize selected element
-const getSelectedAlbumSection = createSelector(
+export const getSelectedAlbumSection = createSelector(
   [albumsSection, selectedAlbum],
   (albums, albumId) => albums[albumId],
 );
 
-const getSelectedAlbum = createSelector(
+export const getSelectedAlbum = createSelector(
   [selectedAlbum, getAlbums],
   (albumId, albums) => albums[albumId],
 );
 
-const getAlbumTracks = createSelector(
+export const getAlbumTracks = createSelector(
   [getSelectedAlbum, getTracks, getArtists],
   (album, tracks, artists) =>
     album && album.tracks && album.tracks.reduce((acc, val) =>
@@ -32,9 +32,3 @@ const getAlbumTracks = createSelector(
         artists: album.artists.map(a => artists[a]),
       }), []),
 );
-
-export {
-  getSelectedAlbumSection,
-  getSelectedAlbum,
-  getAlbumTracks,
-};

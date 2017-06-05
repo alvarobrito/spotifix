@@ -1,7 +1,6 @@
 import { normalize } from 'normalizr';
-import spotifyApi from '@/utils/spotify.api';
 import { createReducer } from '@/utils/reducers.utils';
-import { trackSchema } from '@/modules/entities';
+import { searchTracks } from '@/services/api';
 
 // Actions
 const ADD_TRACKS = 'search/ADD_TRACKS';
@@ -18,14 +17,6 @@ const INIT_STATE = {
   tracks: [],
   offset: 0,
   selectedTracks: [],
-};
-
-// Schema
-export const sectionSchema = {
-  tracks: [trackSchema],
-  // searchInput: '',
-  // offset: 0,
-  // selectedTracks: [trackSchema],
 };
 
 // Reducers
@@ -118,20 +109,14 @@ const setLoading = loading =>
     payload: loading,
   });
 
-const setFetchedData = items => (dispatch) => {
-  const normalized = normalize({ tracks: items }, sectionSchema);
-  dispatch(addSearchTracks(normalized));
-};
-
 // side effects
 const getTracks = getState => (dispatch) => {
   const { sections: { search: { searchInput, offset } } } = getState();
   dispatch(setLoading(true));
 
-  spotifyApi.searchTracks(searchInput, { offset })
-  .then(({ tracks: { items } }) => {
-    dispatch(setFetchedData(items));
-
+  searchTracks(searchInput, { offset })
+  .then((tracks) => {
+    dispatch(addSearchTracks(tracks));
     dispatch(setLoading(false));
   })
   .catch((e) => {

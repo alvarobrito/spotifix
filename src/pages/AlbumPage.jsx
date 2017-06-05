@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-
+import { getAlbum } from '@/modules/sections/album';
 import { getSelectedAlbum, getAlbumTracks } from '@/modules/sections/album/selectors';
-import { fetchAlbum } from '@/modules/sections/album';
 import Spinner from '@/components/ui/Spinner';
 import SongList from '@/components/SongList';
 
 class AlbumPage extends Component {
 
   componentWillMount() {
-    this.props.fetchAlbum(this.props.albumId);
+    this.props.getAlbum(this.props.albumId);
   }
 
   componentWillReceiveProps({ albumId }) {
     if (this.props.albumId !== albumId) {
-      this.props.fetchAlbum(albumId);
+      this.props.getAlbum(albumId);
     }
   }
 
@@ -50,12 +49,12 @@ AlbumPage.propTypes = {
   album: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     images: PropTypes.array,
   }).isRequired,
   tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   albumId: PropTypes.string.isRequired,
-  fetchAlbum: PropTypes.func.isRequired,
+  getAlbum: PropTypes.func.isRequired,
 };
 
 AlbumPage.defaultProps = {
@@ -82,7 +81,7 @@ const mapStateToProps = (state, { match: { params: { albumId } } }) => ({
 });
 
 const mapDispatchToProps = {
-  fetchAlbum,
+  getAlbum,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);

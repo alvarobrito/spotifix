@@ -10,35 +10,27 @@ const selectedArtist = state =>
 
 // selector creators
 // TODO Memoize selected element
-const getSelectedArtistSection = createSelector(
+export const getSelectedArtistSection = createSelector(
   [artistsSection, selectedArtist],
   (artists, artistId) => artists[artistId],
 );
 
-const getSelectedArtist = createSelector(
+export const getSelectedArtist = createSelector(
   [selectedArtist, getArtists],
   (artistId, artists) => artists[artistId],
 );
 
-const getRelatedArtists = createSelector(
+export const getRelatedArtists = createSelector(
   [getSelectedArtistSection, getArtists],
   (artist, artists) => artist && artist.relatedArtists && artist.relatedArtists.map(a => artists[a]),
 );
 
-const getArtistTopTracks = createSelector(
+export const getArtistTopTracks = createSelector(
   [getSelectedArtistSection, getTracks],
   (artist, tracks) => artist && artist.topTracks && artist.topTracks.map(a => tracks[a]),
 );
 
-const getArtistAlbums = createSelector(
+export const getArtistAlbums = createSelector(
   [getSelectedArtistSection, getAlbums],
   (artist, albums) => artist && artist.albums && artist.albums.map(a => albums[a]),
 );
-
-export {
-  getSelectedArtistSection,
-  getSelectedArtist,
-  getRelatedArtists,
-  getArtistAlbums,
-  getArtistTopTracks,
-};
