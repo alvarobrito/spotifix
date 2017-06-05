@@ -88,49 +88,49 @@ export default createReducer(INIT_STATE, {
 });
 
 // Action Creators
-export const addSearchTracks = ({ entities, result }) => (dispatch) => {
-  dispatch({
+const addSearchTracks = ({ entities, result }) => (
+  {
     type: ADD_TRACKS,
     entities,
     payload: result.tracks,
-  });
-};
+  }
+);
 
-export const resetTracks = () => dispatch =>
-  dispatch({
+const resetTracks = () =>
+  ({
     type: RESET_TRACKS,
   });
 
-export const setSearchInput = searchInput => dispatch =>
-  dispatch({
+const setSearchInput = searchInput =>
+  ({
     type: SET_SEARCH_INPUT,
     payload: searchInput,
   });
 
-const addOffset = () => dispatch =>
-  dispatch({
+const addOffset = () =>
+  ({
     type: ADD_OFFSET,
   });
 
-const setLoading = loading => dispatch =>
-  dispatch({
+const setLoading = loading =>
+  ({
     type: SET_LOADING,
     payload: loading,
   });
 
-const setFetchedData = dispatch => (items) => {
+const setFetchedData = items => (dispatch) => {
   const normalized = normalize({ tracks: items }, sectionSchema);
   dispatch(addSearchTracks(normalized));
 };
 
 // side effects
-const getTracks = (dispatch, getState) => {
+const getTracks = getState => (dispatch) => {
   const { sections: { search: { searchInput, offset } } } = getState();
   dispatch(setLoading(true));
 
   spotifyApi.searchTracks(searchInput, { offset })
   .then(({ tracks: { items } }) => {
-    setFetchedData(dispatch)(items);
+    dispatch(setFetchedData(items));
 
     dispatch(setLoading(false));
   })
@@ -141,22 +141,22 @@ const getTracks = (dispatch, getState) => {
 };
 
 export const fetchSongs = searchInput => (dispatch, getState) => {
+  const { sections: { search: { searchInput: currentSearchInput } } } = getState();
+
   if (searchInput.length === 0) {
     dispatch(setSearchInput(searchInput));
     dispatch(resetTracks());
     return;
   }
 
-  const { sections: { search: { searchInput: currentSearchInput } } } = getState();
-
   if (currentSearchInput === searchInput) return;
 
   dispatch(setSearchInput(searchInput));
   dispatch(resetTracks());
-  getTracks(dispatch, getState);
+  dispatch(getTracks(getState));
 };
 
 export const fetchMoreSongs = () => (dispatch, getState) => {
   dispatch(addOffset());
-  getTracks(dispatch, getState);
+  dispatch(getTracks(getState));
 };
