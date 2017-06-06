@@ -1,6 +1,4 @@
-import { normalize } from 'normalizr';
 import { createReducer } from '@/utils/reducers.utils';
-import { searchTracks } from '@/services/api';
 
 // Actions
 const ADD_TRACKS = 'search/ADD_TRACKS';
@@ -9,6 +7,9 @@ const SET_SEARCH_INPUT = 'search/SET_SEARCH_INPUT';
 const SELECT_SONG = 'search/SELECT_SONG';
 const ADD_OFFSET = 'search/ADD_OFFSET';
 const SET_LOADING = 'search/SET_LOADING';
+const FETCH_SEARCH_FAILURE = 'search/FETCH_SEARCH_FAILURE';
+export const GET = '@effect/search/GET_TRACKS';
+export const GET_MORE = '@effect/search/GET_MORE_TRACKS';
 
 // Initial State
 const INIT_STATE = {
@@ -79,7 +80,7 @@ export default createReducer(INIT_STATE, {
 });
 
 // Action Creators
-const addSearchTracks = ({ entities, result }) => (
+export const addSearchTracks = ({ entities, result }) => (
   {
     type: ADD_TRACKS,
     entities,
@@ -87,61 +88,38 @@ const addSearchTracks = ({ entities, result }) => (
   }
 );
 
-const resetTracks = () =>
+export const resetTracks = () =>
   ({
     type: RESET_TRACKS,
   });
 
-const setSearchInput = searchInput =>
+export const setSearchInput = searchInput =>
   ({
     type: SET_SEARCH_INPUT,
     payload: searchInput,
   });
 
-const addOffset = () =>
+export const addOffset = () =>
   ({
     type: ADD_OFFSET,
   });
 
-const setLoading = loading =>
+export const setLoading = loading =>
   ({
     type: SET_LOADING,
     payload: loading,
   });
 
-// side effects
-const getTracks = getState => (dispatch) => {
-  const { sections: { search: { searchInput, offset } } } = getState();
-  dispatch(setLoading(true));
+export const fetchSongs = searchInput => ({
+  type: GET,
+  payload: searchInput,
+});
 
-  searchTracks(searchInput, { offset })
-  .then((tracks) => {
-    dispatch(addSearchTracks(tracks));
-    dispatch(setLoading(false));
-  })
-  .catch((e) => {
-    dispatch(setLoading(false));
-    throw e;
-  });
-};
+export const fetchMoreSongs = () => ({
+  type: GET_MORE,
+});
 
-export const fetchSongs = searchInput => (dispatch, getState) => {
-  const { sections: { search: { searchInput: currentSearchInput } } } = getState();
-
-  if (searchInput.length === 0) {
-    dispatch(setSearchInput(searchInput));
-    dispatch(resetTracks());
-    return;
-  }
-
-  if (currentSearchInput === searchInput) return;
-
-  dispatch(setSearchInput(searchInput));
-  dispatch(resetTracks());
-  dispatch(getTracks(getState));
-};
-
-export const fetchMoreSongs = () => (dispatch, getState) => {
-  dispatch(addOffset());
-  dispatch(getTracks(getState));
-};
+export const throwError = error => ({
+  type: FETCH_SEARCH_FAILURE,
+  payload: error,
+});
