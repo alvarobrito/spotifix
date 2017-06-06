@@ -5,11 +5,13 @@ import Api from '@/services/api';
 import { getSelectedArtistSection } from './selectors';
 
 // Actions
-export const FETCH_ARTIST_REQUEST = '@effect/artist/FETCH_ARTIST_REQUEST';
-export const FETCH_ARTIST_FAILURE = '@effect/artist/FETCH_ARTIST_FAILURE';
-export const ADD_ARTIST = 'artist/ADD_ARTIST';
-export const SELECT_ARTIST = 'artist/SELECT_ARTIST';
-export const LOADING = 'artist/LOADING';
+const ADD_ARTIST = 'artist/ADD_ARTIST';
+const SELECT_ARTIST = 'artist/SELECT_ARTIST';
+const LOADING = 'artist/LOADING';
+
+// @effect Actions
+const FETCH_ARTIST_REQUEST = '@effect/artist/FETCH_ARTIST_REQUEST';
+const FETCH_ARTIST_FAILURE = '@effect/artist/FETCH_ARTIST_FAILURE';
 
 // Initial State
 const INIT_STATE = {
@@ -79,6 +81,8 @@ function* loadArtist({ payload: artistId }) {
   const artistSection = yield select(getSelectedArtistSection);
 
   if (artistSection) {
+    yield put(selectArtist(artistId));
+  } else {
     yield put(setLoading(true));
     try {
       const artist = yield call(Api.getArtist, artistId);

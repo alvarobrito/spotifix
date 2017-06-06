@@ -5,11 +5,13 @@ import Api from '@/services/api';
 import { getSelectedAlbumSection } from './selectors';
 
 // Actions
-export const FETCH_ALBUM_REQUEST = '@effect/album/FETCH_ALBUM_REQUEST';
-export const FETCH_ALBUM_FAILURE = '@effect/album/FETCH_ALBUM_FAILURE';
-export const ADD_ALBUM = 'album/ADD_ALBUM';
-export const SELECT_ALBUM = 'album/SELECT_ALBUM';
-export const LOADING = 'album/LOADING';
+const ADD_ALBUM = 'album/ADD_ALBUM';
+const SELECT_ALBUM = 'album/SELECT_ALBUM';
+const LOADING = 'album/LOADING';
+
+// @effect Actions
+const FETCH_ALBUM_REQUEST = '@effect/album/FETCH_ALBUM_REQUEST';
+const FETCH_ALBUM_FAILURE = '@effect/album/FETCH_ALBUM_FAILURE';
 
 // Initial State
 const INIT_STATE = {
