@@ -24,14 +24,14 @@ export const searchTracks = (value, offset) =>
   .then(({ tracks: { items: tracks } }) => normalize({ tracks }, schema.SEARCH_SECTION));
 
 // TODO it will be removed until to have a new authorize service
-// (function auth() {
-//   const searchParams = new URLSearchParams(document.location.search);
+(function auth() {
+  const searchParams = new URLSearchParams(document.location.search);
 
-//   if (searchParams.has('token')) {
-//     localStorage.setItem('token', searchParams.get('token'));
-//   } else if (!localStorage.getItem('token')) {
-//     document.location = '/login';
-//   }
+  if (searchParams.has('token')) {
+    localStorage.setItem('token', searchParams.get('token'));
+  } else if (!localStorage.getItem('token')) {
+    document.location = '/login';
+  }
 
-//   spotifyApi.setAccessToken(localStorage.getItem('token'));
-// }());
+  spotifyApi.setAccessToken(localStorage.getItem('token'));
+}());
