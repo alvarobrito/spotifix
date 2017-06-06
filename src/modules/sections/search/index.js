@@ -1,6 +1,5 @@
-import { normalize } from 'normalizr';
 import { createReducer } from '@/utils/reducers.utils';
-import { searchTracks } from '@/services/api';
+import Api from '@/services/api';
 
 // Actions
 const ADD_TRACKS = 'search/ADD_TRACKS';
@@ -114,7 +113,7 @@ const getTracks = getState => (dispatch) => {
   const { sections: { search: { searchInput, offset } } } = getState();
   dispatch(setLoading(true));
 
-  searchTracks(searchInput, { offset })
+  Api.searchTracks(searchInput, { offset })
   .then((tracks) => {
     dispatch(addSearchTracks(tracks));
     dispatch(setLoading(false));

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import { getAlbum } from '@/modules/sections/album';
+import { fetchAlbum } from '@/modules/sections/album';
 import { getSelectedAlbum, getAlbumTracks } from '@/modules/sections/album/selectors';
 import Spinner from '@/components/ui/Spinner';
 import SongList from '@/components/SongList';
@@ -10,12 +10,12 @@ import SongList from '@/components/SongList';
 class AlbumPage extends Component {
 
   componentWillMount() {
-    this.props.getAlbum(this.props.albumId);
+    this.props.fetchAlbum(this.props.albumId);
   }
 
   componentWillReceiveProps({ albumId }) {
     if (this.props.albumId !== albumId) {
-      this.props.getAlbum(albumId);
+      this.props.fetchAlbum(albumId);
     }
   }
 
@@ -54,7 +54,7 @@ AlbumPage.propTypes = {
   }).isRequired,
   tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   albumId: PropTypes.string.isRequired,
-  getAlbum: PropTypes.func.isRequired,
+  fetchAlbum: PropTypes.func.isRequired,
 };
 
 AlbumPage.defaultProps = {
@@ -81,7 +81,7 @@ const mapStateToProps = (state, { match: { params: { albumId } } }) => ({
 });
 
 const mapDispatchToProps = {
-  getAlbum,
+  fetchAlbum,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);

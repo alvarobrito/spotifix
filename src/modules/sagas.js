@@ -1,7 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
-import { watchErrors } from './errors/sagas';
-import { watchLoadAlbum } from './sections/album/sagas';
-import { watchLoadArtist } from './sections/artist/sagas';
+import { watchErrors } from './errors';
+import { watchLoadAlbum } from './sections/album';
+import { watchLoadArtist } from './sections/artist';
 
 export default function* rootSaga() {
   yield all([

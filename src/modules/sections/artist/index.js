@@ -1,9 +1,12 @@
-import { createReducer } from '@/utils/reducers.utils';
 import merge from 'lodash/fp/merge';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { createReducer } from '@/utils/reducers.utils';
+import Api from '@/services/api';
+import { getSelectedArtistSection } from './selectors';
 
 // Actions
+export const FETCH_ARTIST_REQUEST = '@effect/artist/FETCH_ARTIST_REQUEST';
 export const FETCH_ARTIST_FAILURE = '@effect/artist/FETCH_ARTIST_FAILURE';
-export const GET_ARTIST = '@effect/artist/GET_ARTIST';
 export const ADD_ARTIST = 'artist/ADD_ARTIST';
 export const SELECT_ARTIST = 'artist/SELECT_ARTIST';
 export const LOADING = 'artist/LOADING';
@@ -15,7 +18,7 @@ const INIT_STATE = {
   loading: false,
 };
 
-// Reducer
+// Reducers
 export default createReducer(INIT_STATE, {
 
   [ADD_ARTIST](state, payload) {
@@ -60,8 +63,8 @@ export const setLoading = loading => ({
   payload: loading,
 });
 
-export const getArtist = artistId => ({
-  type: GET_ARTIST,
+export const fetchArtist = artistId => ({
+  type: FETCH_ARTIST_REQUEST,
   payload: artistId,
 });
 
@@ -69,3 +72,25 @@ export const throwError = error => ({
   type: FETCH_ARTIST_FAILURE,
   payload: error,
 });
+
+// Sagas
+function* loadArtist({ payload: artistId }) {
+  yield put(selectArtist(artistId));
+  const artistSection = yield select(getSelectedArtistSection);
+
+  if (artistSection) {
+    yield put(setLoading(true));
+    try {
+      const artist = yield call(Api.getArtist, artistId);
+      yield put(addArtist(artist, artistId));
+      yield put(selectArtist(artistId));
+    } catch ({ status }) {
+      yield put(throwError(status));
+    }
+    yield put(setLoading(false));
+  }
+}
+
+export function* watchLoadArtist() {
+  yield takeLatest(FETCH_ARTIST_REQUEST, loadArtist);
+}

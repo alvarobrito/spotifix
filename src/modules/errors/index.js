@@ -1,15 +1,13 @@
 import { put, fork, take } from 'redux-saga/effects';
 import { FETCH_ALBUM_FAILURE } from '@/modules/sections/album';
 import { FETCH_ARTIST_FAILURE } from '@/modules/sections/artist';
-import { showDialog, hideDialog } from '@/modules/ui/dialog';
+import { showDialog } from '@/modules/ui/dialog';
 
-// Workers
+// Sagas
 function* errorsHandler(code) {
-  yield put(hideDialog());
   yield put(showDialog(`ERROR ${code}`));
 }
 
-// Watchers
 export function* watchErrors() {
   const action = yield take([
     FETCH_ALBUM_FAILURE,
@@ -17,7 +15,3 @@ export function* watchErrors() {
   ]);
   yield fork(errorsHandler, action.payload);
 }
-
-export default {
-  watchErrors,
-};

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 // Modules
-import { getArtist } from '@/modules/sections/artist';
+import { fetchArtist } from '@/modules/sections/artist';
 import { getSelectedArtist, getRelatedArtists, getArtistAlbums, getArtistTopTracks } from '@/modules/sections/artist/selectors';
 
 // Components
@@ -16,12 +16,12 @@ import Spinner from '@/components/ui/Spinner';
 class ArtistPage extends Component {
 
   componentWillMount() {
-    this.props.getArtist(this.props.artistId);
+    this.props.fetchArtist(this.props.artistId);
   }
 
   componentWillReceiveProps({ artistId }) {
     if (this.props.artistId !== artistId) {
-      this.props.getArtist(artistId);
+      this.props.fetchArtist(artistId);
     }
   }
 
@@ -65,7 +65,7 @@ ArtistPage.propTypes = {
   relatedArtists: PropTypes.arrayOf(PropTypes.object).isRequired,
   topTracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   artistId: PropTypes.string.isRequired,
-  getArtist: PropTypes.func.isRequired,
+  fetchArtist: PropTypes.func.isRequired,
 };
 
 ArtistPage.defaultProps = {
@@ -94,7 +94,7 @@ const mapStateToProps = (state, { match: { params: { artistId } } }) => ({
 });
 
 const mapDispatchToProps = {
-  getArtist,
+  fetchArtist,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistPage);

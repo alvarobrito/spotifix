@@ -4,11 +4,11 @@ import schema from './schema';
 
 const spotifyApi = new SpotifyWebApi();
 
-export const getAlbum = albumId =>
+const getAlbum = albumId =>
   spotifyApi.getAlbum(albumId)
   .then(data => normalize({ id: data }, schema.ALBUM_SECTION));
 
-export async function getArtist(artistId) {
+async function getArtist(artistId) {
   const [id, { items: albums }, { tracks: topTracks }, { artists: relatedArtists }]
   = await Promise.all([
     spotifyApi.getArtist(artistId),
@@ -19,7 +19,7 @@ export async function getArtist(artistId) {
   return normalize({ id, albums, topTracks, relatedArtists }, schema.ARTIST_SECTION);
 }
 
-export const searchTracks = (value, offset) =>
+const searchTracks = (value, offset) =>
   spotifyApi.searchTracks(value, offset)
   .then(({ tracks: { items: tracks } }) => normalize({ tracks }, schema.SEARCH_SECTION));
 
@@ -35,3 +35,9 @@ export const searchTracks = (value, offset) =>
 
   spotifyApi.setAccessToken(localStorage.getItem('token'));
 }());
+
+export default {
+  getAlbum,
+  getArtist,
+  searchTracks,
+};
