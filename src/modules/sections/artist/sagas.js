@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { getArtist } from '@/services/api';
 import { getSelectedArtistSection } from './selectors';
-import { GET, addArtist, selectArtist, setLoading, throwError } from './';
+import { GET_ARTIST, addArtist, selectArtist, setLoading, throwError } from './';
 
 // Workers
 function* loadArtist({ payload: artistId }) {
@@ -14,8 +14,8 @@ function* loadArtist({ payload: artistId }) {
       const artist = yield call(getArtist, artistId);
       yield put(addArtist(artist, artistId));
       yield put(selectArtist(artistId));
-    } catch ({ status, statusText }) {
-      yield put(throwError({ status, statusText }));
+    } catch ({ status }) {
+      yield put(throwError(status));
     }
     yield put(setLoading(false));
   }
@@ -23,7 +23,7 @@ function* loadArtist({ payload: artistId }) {
 
 // Watchers
 export function* watchLoadArtist() {
-  yield takeLatest(GET, loadArtist);
+  yield takeLatest(GET_ARTIST, loadArtist);
 }
 
 export default {

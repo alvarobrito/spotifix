@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
-// Containers
+// Components
 import SearchContainer from '@/containers/SearchContainer';
+import Dialog from '@/containers/DialogContainer';
 import Header from '@/components/ui/Header';
 
 // Pages
@@ -17,6 +18,7 @@ const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
     <div>
       <Header />
+      <Dialog />
       <Route exact path="/" component={SearchContainer} />
       <Route path="/browse" component={HomePage} />
       <Route path="/login" component={LoginPage} />

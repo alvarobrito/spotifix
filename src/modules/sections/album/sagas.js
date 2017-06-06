@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { getAlbum } from '@/services/api';
 import { getSelectedAlbumSection } from './selectors';
-import { GET, addAlbum, selectAlbum, setLoading, throwError } from './';
+import { GET_ALBUM, addAlbum, selectAlbum, setLoading, throwError } from './';
 
 // Workers
 function* loadAlbum({ payload: albumId }) {
@@ -16,8 +16,8 @@ function* loadAlbum({ payload: albumId }) {
       const album = yield call(getAlbum, albumId);
       yield put(addAlbum(album, albumId));
       yield put(selectAlbum(albumId));
-    } catch ({ status, statusText }) {
-      yield put(throwError({ status, statusText }));
+    } catch ({ status }) {
+      yield put(throwError(status));
     }
     yield put(setLoading(false));
   }
@@ -25,7 +25,7 @@ function* loadAlbum({ payload: albumId }) {
 
 // Watchers
 export function* watchLoadAlbum() {
-  yield takeLatest(GET, loadAlbum);
+  yield takeLatest(GET_ALBUM, loadAlbum);
 }
 
 export default {

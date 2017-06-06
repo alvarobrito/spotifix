@@ -2,34 +2,33 @@ import { createReducer } from '@/utils/reducers.utils';
 import merge from 'lodash/fp/merge';
 
 // Actions
-export const GET = 'section/album/GET';
-export const ERROR = 'section/album/ERROR';
-export const ADD = 'section/album/ADD';
-export const SELECT = 'section/album/SELECT';
-export const LOADING = 'section/album/LOADING';
+export const FETCH_ALBUM_FAILURE = '@effect/album/FETCH_ALBUM_FAILURE';
+export const GET_ALBUM = '@effect/album/GET_ALBUM';
+export const ADD_ALBUM = 'album/ADD_ALBUM';
+export const SELECT_ALBUM = 'album/SELECT_ALBUM';
+export const LOADING = 'album/LOADING';
 
 // Initial State
 const INIT_STATE = {
   selected: '',
   albums: {},
   loading: false,
-  error: {},
 };
 
 // Reducer
 export default createReducer(INIT_STATE, {
 
-  [ADD](state, payload) {
+  [ADD_ALBUM](state, payload) {
     return {
       ...state,
       albums: merge(state.albums, payload),
     };
   },
 
-  [SELECT](state, payload) {
+  [SELECT_ALBUM](state, payload) {
     return {
       ...state,
-      selected: payload,
+      select_ALBUMed: payload,
     };
   },
 
@@ -40,18 +39,11 @@ export default createReducer(INIT_STATE, {
     };
   },
 
-  [ERROR](state, payload) {
-    return {
-      ...state,
-      error: payload,
-    };
-  },
-
 });
 
 // Action Creators
 export const addAlbum = ({ entities, result }, albumId) => ({
-  type: ADD,
+  type: ADD_ALBUM,
   entities,
   payload: {
     [albumId]: result,
@@ -59,7 +51,7 @@ export const addAlbum = ({ entities, result }, albumId) => ({
 });
 
 export const selectAlbum = albumId => ({
-  type: SELECT,
+  type: SELECT_ALBUM,
   payload: albumId,
 });
 
@@ -69,11 +61,11 @@ export const setLoading = loading => ({
 });
 
 export const getAlbum = albumId => ({
-  type: GET,
+  type: GET_ALBUM,
   payload: albumId,
 });
 
 export const throwError = error => ({
-  type: ERROR,
+  type: FETCH_ALBUM_FAILURE,
   payload: error,
 });
