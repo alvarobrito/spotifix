@@ -1,4 +1,6 @@
 import { createReducer } from '@/utils/reducers.utils';
+import { put, call, takeEvery, select, throttle } from 'redux-saga/effects';
+import Api from '@/services/api';
 
 // Actions
 const ADD_TRACKS = 'search/ADD_TRACKS';
@@ -123,3 +125,47 @@ export const throwError = error => ({
   type: FETCH_SEARCH_FAILURE,
   payload: error,
 });
+
+// Workers
+function* getTracks() {
+  const { sections: { search: { searchInput, offset } } } = yield select();
+
+  yield put(setLoading(true));
+
+  try {
+    const tracks = yield call(Api.searchTracks, [searchInput, offset]);
+
+    yield put(addSearchTracks(tracks));
+  } catch ({ status, statusText }) {
+    yield put(throwError({ status, statusText }));
+  }
+
+  yield put(setLoading(false));
+}
+
+function* fetchSongsWorker({ payload: searchInput }) {
+  const { sections: { search: { searchInput: currentSearchInput } } } = yield select();
+
+  if (searchInput.length === 0) {
+    yield put(setSearchInput(searchInput));
+    yield put(resetTracks());
+    return;
+  }
+
+  if (currentSearchInput === searchInput) return;
+
+  yield put(setSearchInput(searchInput));
+  yield put(resetTracks());
+  yield call(getTracks);
+}
+
+function* fetchMoreSongsWorker() {
+  yield put(addOffset());
+  yield call(getTracks);
+}
+
+// Watchers
+export function* watchFetchSongs() {
+  yield throttle(300, GET, fetchSongsWorker);
+  yield takeEvery(GET_MORE, fetchMoreSongsWorker);
+}
