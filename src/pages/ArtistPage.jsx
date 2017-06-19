@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardMedia, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 
 // Modules
 import { fetchArtist } from '@/modules/sections/artist';
@@ -10,7 +10,7 @@ import { getSelectedArtist, getRelatedArtists, getArtistAlbums, getArtistTopTrac
 // Components
 import Albums from '@/components/Albums';
 import Related from '@/components/Related';
-import SongList from '@/components/SongList';
+import TrackList from '@/components/ui/TrackList/TrackList';
 import Spinner from '@/components/ui/Spinner';
 
 class ArtistPage extends Component {
@@ -27,21 +27,29 @@ class ArtistPage extends Component {
 
   render() {
     const { loading, albums, artist, relatedArtists, topTracks } = this.props;
+
+    const styles = {
+      card: {
+        height: '450px',
+      },
+    };
+
     return (
       <div>
         {(!loading) && (
           <Card>
             <CardMedia
               overlay={<CardTitle title={artist.name} />}
+              style={styles.card}
             >
-              <img src={artist.images[0].url} alt={artist.name} />
+              <img src={artist.images[0].url} style={styles.card} alt="" />
             </CardMedia>
             <CardText>
-              <h3>Albums</h3>
+              <h3 className="h2">Popular</h3>
+              <TrackList tracks={topTracks} />
+              <h3 className="h2">Albums</h3>
               <Albums albums={albums} />
-              <h3>Top tracks</h3>
-              <SongList songs={topTracks} />
-              <h3>Related artists</h3>
+              <h3 className="h2">Related artists</h3>
               <Related artists={relatedArtists} />
             </CardText>
           </Card>

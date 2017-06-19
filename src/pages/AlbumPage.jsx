@@ -5,7 +5,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { fetchAlbum } from '@/modules/sections/album';
 import { getSelectedAlbum, getAlbumTracks } from '@/modules/sections/album/selectors';
 import Spinner from '@/components/ui/Spinner';
-import SongList from '@/components/SongList';
+import TrackList from '@/components/ui/TrackList/TrackList';
 
 class AlbumPage extends Component {
 
@@ -25,14 +25,13 @@ class AlbumPage extends Component {
       <div>
         {(!loading) && (
         <Card>
-          <CardHeader
-            title={album.name}
-            subtitle={album.label}
-            avatar={album.images[0].url}
-          />
           <CardText>
-            <h3>Tracks</h3>
-            <SongList songs={tracks} />
+            <CardHeader
+              title={album.name}
+              subtitle={album.label}
+              avatar={album.images[0].url}
+            />
+            <TrackList tracks={tracks} />
           </CardText>
         </Card>
         )}

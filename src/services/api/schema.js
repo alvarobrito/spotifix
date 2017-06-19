@@ -16,8 +16,8 @@ const artistSchema = new schema.Entity('artists', {}, {
     ...entityB,
     images: entityA.images || entityB.images || [],
   }),
-  processStrategy: ({ id, name, images }) =>
-    ({ id, name, images }),
+  processStrategy: ({ id, name, images, popularity }) =>
+    ({ id, name, images, popularity }),
 });
 
 const albumSchema = new schema.Entity('albums', {}, {

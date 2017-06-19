@@ -26,8 +26,8 @@ export const getRelatedArtists = createSelector(
 );
 
 export const getArtistTopTracks = createSelector(
-  [getSelectedArtistSection, getTracks],
-  (artist, tracks) => artist && artist.topTracks && artist.topTracks.map(a => tracks[a]),
+  [getSelectedArtistSection, getTracks, getAlbums],
+  (artist, tracks, albums) => artist && artist.topTracks && artist.topTracks.map(a => ({ ...tracks[a], album: albums[tracks[a].album] })),
 );
 
 export const getArtistAlbums = createSelector(

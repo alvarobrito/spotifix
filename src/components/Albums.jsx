@@ -15,13 +15,11 @@ const styles = {
 
 const Albums = ({ albums }) => (
   <div style={styles.root}>
-    <GridList cols={4}>
+    <GridList cols={5}>
       {albums.map(a =>
         <NavLink key={a.id} to={`../album/${a.id}`}>
           <GridTile
             key={a.id}
-            title={a.name}
-            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
           >
             <img src={a.images[0].url} alt={a.name} />
           </GridTile>
