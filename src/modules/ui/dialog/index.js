@@ -1,7 +1,7 @@
 import { createReducer } from '@/utils/reducers.utils';
 
-export const SHOW = 'ui/dialog/SHOW';
-export const HIDE = 'ui/dialog/HIDE';
+const SHOW = 'ui/dialog/SHOW';
+const HIDE = 'ui/dialog/HIDE';
 
 const INIT_STATE = {
   show: false,

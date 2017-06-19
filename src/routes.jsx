@@ -18,6 +18,11 @@ const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
     <div>
       <Header />
+      {/*<ModalSwitcher>
+        <LoginModal key={LOGIN_MODAL} />
+        <SigninModal key={SIGNIN_MODAL} />
+        <Confirm key={CONFIRM_MODAL} />
+      </ModalSwitcher>*/}
       <Dialog />
       <Route exact path="/" component={SearchContainer} />
       <Route path="/browse" component={HomePage} />
