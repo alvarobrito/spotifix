@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { fetchAlbum } from '@/modules/sections/album';
 import { getSelectedAlbum, getAlbumTracks } from '@/modules/sections/album/selectors';
 import Spinner from '@/components/ui/Spinner';
@@ -13,7 +12,7 @@ class AlbumPage extends Component {
     this.props.fetchAlbum(this.props.albumId);
   }
 
-  componentWillReceiveProps({ albumId }) {
+  componentDidUpdate({ albumId }) {
     if (this.props.albumId !== albumId) {
       this.props.fetchAlbum(albumId);
     }
@@ -21,19 +20,21 @@ class AlbumPage extends Component {
 
   render() {
     const { album, tracks, loading } = this.props;
+    const styles = {
+      card: {
+        height: '450px',
+      },
+    };
+
     return (
       <div>
         {(!loading) && (
-        <Card>
-          <CardText>
-            <CardHeader
-              title={album.name}
-              subtitle={album.label}
-              avatar={album.images[0].url}
-            />
+          <div>
+            <h1 className="h2">{album.name}</h1>
+            <h2>{album.label}</h2>
+            <img src={album.images[0].url} style={styles.card} alt="" />
             <TrackList tracks={tracks} />
-          </CardText>
-        </Card>
+          </div>
         )}
         {(loading) && (<Spinner />)}
       </div>

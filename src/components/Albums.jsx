@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { NavLink } from 'react-router-dom';
-import { GridList, GridTile } from 'material-ui/GridList';
 
 const styles = {
   root: {
@@ -15,16 +12,10 @@ const styles = {
 
 const Albums = ({ albums }) => (
   <div style={styles.root}>
-    <GridList cols={5}>
-      {albums.map(a =>
-        <NavLink key={a.id} to={`../album/${a.id}`}>
-          <GridTile
-            key={a.id}
-          >
-            <img src={a.images[0].url} alt={a.name} />
-          </GridTile>
-        </NavLink>)}
-    </GridList>
+    {albums.map(a =>
+      <NavLink key={a.id} to={`../album/${a.id}`}>
+        <img src={a.images[0].url} alt={a.name} />
+      </NavLink>)}
   </div>
 );
 

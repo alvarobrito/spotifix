@@ -1,5 +1,4 @@
 import React from 'react';
-import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const style = {
   container: {
@@ -25,14 +24,7 @@ const style = {
 
 const Spinner = () => (
   <div style={style.container}>
-    <RefreshIndicator
-      size={60}
-      left={0}
-      top={0}
-      status="loading"
-      percentage={30}
-      style={style.refresh}
-    />
+    <div style={style.refresh}>loading...</div>
   </div>
 );
 

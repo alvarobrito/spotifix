@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import './TrackList.css';
 
 const TrackList = ({ className, tracks }) => {
@@ -9,10 +10,13 @@ const TrackList = ({ className, tracks }) => {
   }
   return (
     <ol className={classnames('track-list', { [`track-list--${className}`]: !!className })}>
-      {tracks.map(({ id, name, album: { name: albumName } }) =>
+      {tracks.map(({ id, name, album, artists }) =>
         <li key={id} className="track-list__item">
           <strong className="track-list__title">{name}</strong>
-          <span className="track-list__subtitle">{albumName}</span>
+          {(artists) && (<NavLink to={`/artist/${artists[0].id}`}><span className="track-list__subtitle">{artists[0].name}</span></NavLink>)}
+          <NavLink to={`/album/${album.id}`}>
+            <span className="track-list__subtitle">{album.name}</span>
+          </NavLink>
         </li>)}
     </ol>
   );

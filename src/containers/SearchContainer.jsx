@@ -1,22 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import LinearProgress from 'material-ui/LinearProgress';
+import Spinner from '@/components/ui/Spinner';
 import withFetchOnScroll from '@/components/hoc/withFetchOnScroll';
-import SongList from '@/components/SongList';
+import TrackList from '@/components/ui/TrackList/TrackList';
 import Search from '@/components/Search';
 import { fetchSongs, fetchMoreSongs } from '@/modules/sections/search';
 import { getSearchTracks } from '@/modules/sections/search/selectors';
 
 const SearchContainer = ({ onSearchChange, loading, tracks }) => (
   <div className="search-wrapper">
-    <Search onChange={(event, searchInputNow) => onSearchChange(searchInputNow)} />
-    <SongList songs={tracks} />
-    <div>
-      {(loading) && (
-        <LinearProgress />
-      )}
-    </div>
+    <Search onChange={(event) => onSearchChange(event.target.value)} />
+    <TrackList tracks={tracks} />
+    {(loading) && (<p style={{ textAlign: 'center', clear: 'both' }}>loading...</p>)}
   </div>
 );
 

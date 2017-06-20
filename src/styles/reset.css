@@ -1,0 +1,138 @@
+/*------------------------------------*\
+    #RESET-STYLES
+\*------------------------------------*/
+/**
+ * Based on [Eric Meyer's reset 2.0](http://meyerweb.com/eric/tools/css/reset/index.html)
+ * Global reset rules.
+ * For more specific resets, use the reset mixins provided below
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, input, select, textarea, button,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/**
+ * Unlike Eric's original reset, we reset the html element to be compatible
+ * with the vertical rhythm mixins.
+ */
+html {
+  line-height: 1;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a img {
+  border: none;
+}
+
+select, input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  overflow: visible;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+input[type="radio"], input[type="checkbox"] {
+  padding: 0 !important;
+  border: none;
+  width: auto !important;
+  cursor: pointer;
+}
+input[type="button"], input[type="submit"], input[type="image"] {
+  cursor: pointer;
+  outline: 0;
+  overflow: visible;
+  -webkit-appearance: button;
+}
+input[type="disabled"], input[disabled], input[readonly], fieldset[disabled] input {
+  cursor: not-allowed;
+  cursor: default;
+  outline: 0;
+  overflow: visible;
+  -webkit-appearance: button;
+}
+
+input,
+button,
+select,
+textarea {
+  outline: 0;
+}
+
+article, aside, audio, canvas, figcaption, figure, footer, header, hgroup, output, section, video {
+  display: block;
+}
+
+.lt-ie8 input[type="checkbox"] {
+  vertical-align: baseline;
+}
+
+.lt-ie8 legend {
+  margin-left: -7px;
+}
+
+/* Bicubic img IE */
+.lt-ie8 img {
+  -ms-interpolation-mode: bicubic;
+}

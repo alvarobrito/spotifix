@@ -5,7 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 // Components
 import SearchContainer from '@/containers/SearchContainer';
-import Dialog from '@/containers/DialogContainer';
+// import Dialog from '@/containers/DialogContainer';
 import Header from '@/components/ui/Header';
 
 // Pages
@@ -23,7 +23,7 @@ const Routes = ({ history }) => (
         <SigninModal key={SIGNIN_MODAL} />
         <Confirm key={CONFIRM_MODAL} />
       </ModalSwitcher>*/}
-      <Dialog />
+      {/*<Dialog />*/}
       <Route exact path="/" component={SearchContainer} />
       <Route path="/browse" component={HomePage} />
       <Route path="/login" component={LoginPage} />

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, CardMedia, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 
 // Modules
 import { fetchArtist } from '@/modules/sections/artist';
@@ -15,11 +14,11 @@ import Spinner from '@/components/ui/Spinner';
 
 class ArtistPage extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchArtist(this.props.artistId);
   }
 
-  componentWillReceiveProps({ artistId }) {
+  componentDidUpdate({ artistId }) {
     if (this.props.artistId !== artistId) {
       this.props.fetchArtist(artistId);
     }
@@ -37,22 +36,16 @@ class ArtistPage extends Component {
     return (
       <div>
         {(!loading) && (
-          <Card>
-            <CardMedia
-              overlay={<CardTitle title={artist.name} />}
-              style={styles.card}
-            >
-              <img src={artist.images[0].url} style={styles.card} alt="" />
-            </CardMedia>
-            <CardText>
-              <h3 className="h2">Popular</h3>
-              <TrackList tracks={topTracks} />
-              <h3 className="h2">Albums</h3>
-              <Albums albums={albums} />
-              <h3 className="h2">Related artists</h3>
-              <Related artists={relatedArtists} />
-            </CardText>
-          </Card>
+          <div>
+            <h1 className="h2">{artist.name}</h1>
+            <img src={artist.images[0].url} style={styles.card} alt="" />
+            <h3 className="h2">Popular</h3>
+            <TrackList tracks={topTracks} />
+            <h3 className="h2">Albums</h3>
+            <Albums albums={albums} />
+            <h3 className="h2">Related artists</h3>
+            <Related artists={relatedArtists} />
+          </div>
         )}
         {(loading) && (<Spinner />)}
       </div>

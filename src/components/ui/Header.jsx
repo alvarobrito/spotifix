@@ -1,5 +1,4 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
 import Nav from './Nav';
 
 /**
@@ -7,10 +6,10 @@ import Nav from './Nav';
  * By default, the left icon is a navigation-menu.
  */
 const Header = () => (
-  <AppBar
-    title="Spotifix"
-    iconElementLeft={<Nav />}
-  />
+  <div className="header">
+    <h1 className="h2">Spotifix</h1>
+    <Nav />
+  </div>
 );
 
 export default Header;

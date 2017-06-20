@@ -1,23 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
 const Search = ({ onChange }) => (
-  <Toolbar>
-    <ToolbarGroup>
-      <TextField
-        hintText="Search a song..."
-        onChange={onChange}
-      />
-    </ToolbarGroup>
-    <ToolbarGroup>
-      <RaisedButton
-        label="Filters"
-      />
-    </ToolbarGroup>
-  </Toolbar>
+  <label>
+    Search a song:
+    <input type="text" onChange={onChange} />
+  </label>
 );
 
 Search.propTypes = {
