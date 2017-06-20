@@ -24,8 +24,8 @@ const Routes = ({ history }) => (
         <Confirm key={CONFIRM_MODAL} />
       </ModalSwitcher>*/}
       {/*<Dialog />*/}
-      <Route exact path="/" component={SearchContainer} />
-      <Route path="/browse" component={HomePage} />
+      <Route exact path="/" component={HomePage} />
+      <Route path="/songs" component={SearchContainer} />
       <Route path="/login" component={LoginPage} />
       <Route path="/artist/:artistId" exact component={ArtistPage} />
       <Route path="/artist/:artistId/album/:albumId" component={AlbumPage} />

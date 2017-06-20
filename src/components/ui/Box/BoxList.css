@@ -1,0 +1,10 @@
+.box-list {
+  clear:both;
+  overflow: hidden;
+}
+
+.box-list__item {
+  width: 50%;
+  float: left;
+  padding: .6rem;
+}

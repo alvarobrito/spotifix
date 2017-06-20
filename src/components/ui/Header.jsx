@@ -1,15 +1,14 @@
 import React from 'react';
-import Nav from './Nav';
+import './Header.css';
 
 /**
  * A simple example of `AppBar` with an icon on the right.
  * By default, the left icon is a navigation-menu.
  */
 const Header = () => (
-  <div className="header">
-    <h1 className="h2">Spotifix</h1>
-    <Nav />
-  </div>
+  <header className="header">
+    <h1 className="header__title">Spotifix</h1>
+  </header>
 );
 
 export default Header;

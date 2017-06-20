@@ -1,0 +1,19 @@
+.box {
+	font-size: 20px;
+  font-weight: 400;
+	text-align: center;
+  position: relative;
+  display: block;
+	border-radius: 6px;
+	background-color: rgba(255, 255, 255, 0.5);
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+	border: solid 1px #c8c8c8;
+  text-transform: uppercase;
+  line-height: 200px;
+  height: 200px;
+  transition: all 0.3s ease 0s;
+}
+
+.box:hover {
+  background-color: white;
+}
