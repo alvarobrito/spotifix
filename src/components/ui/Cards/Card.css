@@ -1,0 +1,21 @@
+.card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 22px;
+}
+
+  .card__title {
+    font-size: 30px;
+    font-weight: 400;
+    color: #515151;
+    display: block;
+  }
+
+  .card__subtitle {
+    display: block;
+    margin-top: 6px;
+    color: #b3b3b3;
+    font-size: 20px;
+  }

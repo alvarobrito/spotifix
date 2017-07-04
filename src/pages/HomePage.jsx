@@ -1,27 +1,28 @@
 import React from 'react';
-import BoxList from '@/components/ui/Box/BoxList';
+import CardList from '@/containers/GenresContainer';
 
 const sections = [{
   id: 0,
-  name: 'Genres',
+  name: 'Pop',
   path: '/',
 }, {
   id: 1,
-  name: 'Songs',
+  name: 'Electronic',
   path: '/songs',
 }, {
   id: 2,
-  name: 'Albums',
+  name: 'Rock',
   path: '/',
 }, {
   id: 3,
-  name: 'Artists',
+  name: 'Dance',
   path: '/',
 }];
 
 const HomePage = () => (
   <div className="home-page">
-    <BoxList items={sections} />
+    <h1 className="h2">Artists</h1>
+    <CardList items={sections} />
   </div>
 );
 

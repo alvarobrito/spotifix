@@ -19,6 +19,10 @@ async function getArtist(artistId) {
   return normalize({ id, albums, topTracks, relatedArtists }, schema.ARTIST_SECTION);
 }
 
+const getGenres = () =>
+  spotifyApi.getAvailableGenreSeeds()
+  .then(data => data.genres);
+
 const searchTracks = (value, offset) =>
   spotifyApi.searchTracks(value, offset)
   .then(({ tracks: { items: tracks } }) => normalize({ tracks }, schema.SEARCH_SECTION));
@@ -39,5 +43,6 @@ const searchTracks = (value, offset) =>
 export default {
   getAlbum,
   getArtist,
+  getGenres,
   searchTracks,
 };

@@ -1,0 +1,23 @@
+.card-list {
+  clear:both;
+  display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
+}
+
+  .card-list__item {
+    margin: 1rem;
+  }
+
+    .card-list__link {
+      width: 320px;
+      height: 320px;
+      padding-bottom: 110px;
+      box-sizing: content-box;
+      background: white url('http://lorempixel.com/320/320/');
+      background-size: 320px 320px;
+      background-repeat: no-repeat;
+      background-position: top center;
+      display: block;
+      position: relative;
+    }
