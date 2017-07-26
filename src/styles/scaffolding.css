@@ -1,3 +1,10 @@
+@font-face {
+	font-family: 'Gotham Book';
+	src: url('/assets/fonts/Gotham-Book.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /*------------------------------------*\
     #SCAFFOLDING
 \*------------------------------------*/
@@ -26,9 +33,9 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Gotham Book', sans-serif;
   font-size: 1em;
-  line-height: 1.375em;
+  line-height: 1.5em;
   color: #5e5e5e;
   background-color: #F2F2F2;
   height: 100%;
@@ -48,14 +55,17 @@ a {
 }
 
 .h2 {
-	opacity: 0.7;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
+  opacity: 0.7;
+	font-size: 20px;
   font-weight: normal;
 	line-height: 0.8;
 	color: #404040;
   border-bottom: 1px solid #d7d7d7;
-  padding: .8rem 0;
-  margin: 1rem 0 0;
+  padding-bottom: .8rem;
+  margin-bottom: 20px;
   text-transform: uppercase;
+}
+
+.content {
+  padding: 130px 30px 30px;
 }

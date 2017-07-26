@@ -68,6 +68,7 @@ module.exports = {
     historyApiFallback: {
       disableDotRule: true,
     },
+    // host: '192.168.1.35',
     port: 8080,
     compress: false,
     inline: true,

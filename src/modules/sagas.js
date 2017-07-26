@@ -3,6 +3,7 @@ import { watchErrors } from './errors';
 import { watchLaunchModal } from './ui/modal';
 import { watchLoadAlbum } from './sections/album';
 import { watchLoadArtist } from './sections/artist';
+import { watchLoadArtists } from './sections/artists';
 import { watchLoadGenres } from './sections/genres';
 import { watchFetchSongs } from './sections/search';
 
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     fork(watchLoadGenres),
     fork(watchLoadAlbum),
     fork(watchLoadArtist),
+    fork(watchLoadArtists),
     fork(watchFetchSongs),
   ]);
 }

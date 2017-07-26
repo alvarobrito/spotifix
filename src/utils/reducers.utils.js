@@ -39,12 +39,11 @@ export function inmutableMerge(oldObject, newObject) {
   return { ...oldObject, ...merged };
 }
 
-export function union(a, b) {
-  return a.concat(b.reduce((acc, val) => {
-    if (!a.some(a2 => a2 === val)) acc.push(val);
+export const union = (a, b) =>
+  a.concat(b.reduce((acc, val) => {
+    if (!~a.indexOf(val)) acc.push(val);
     return acc;
   }, []));
-}
 
 export function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);

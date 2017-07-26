@@ -1,6 +1,6 @@
 import SpotifyWebApi from 'spotify-web-api-js';
 import { normalize } from 'normalizr';
-import schema from './schema';
+import schema, { artistSchema } from './schema';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -23,6 +23,10 @@ const getGenres = () =>
   spotifyApi.getAvailableGenreSeeds()
   .then(data => data.genres);
 
+const getAllArtists = (value, offset) =>
+  spotifyApi.searchArtists(value, { offset })
+  .then(({ artists: { items: artists } }) => normalize(artists, [artistSchema]));
+
 const searchTracks = (value, offset) =>
   spotifyApi.searchTracks(value, offset)
   .then(({ tracks: { items: tracks } }) => normalize({ tracks }, schema.SEARCH_SECTION));
@@ -41,8 +45,9 @@ const searchTracks = (value, offset) =>
 }());
 
 export default {
+  getGenres,
   getAlbum,
   getArtist,
-  getGenres,
+  getAllArtists,
   searchTracks,
 };

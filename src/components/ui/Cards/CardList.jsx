@@ -7,10 +7,10 @@ import './CardList.css';
 
 const CardList = ({ className, items }) => (
   <ul className={classnames('card-list', { [`card-list--${className}`]: !!className })}>
-    {items.map((val, i) => (
-      <li key={i} className="card-list__item">
-        <NavLink to="/" className="card-list__link">
-          <Card title={val} subtitle="800,92 Followers" />
+    {items.map(obj => (
+      <li key={obj.id} className="card-list__item">
+        <NavLink to={`/artist/${obj.id}`} className="card-list__link">
+          <Card title={obj.name} subtitle={`${obj.followers} Followers`} image={obj.images[1] && obj.images[1].url} />
         </NavLink>
       </li>))}
   </ul>
@@ -18,7 +18,7 @@ const CardList = ({ className, items }) => (
 
 CardList.propTypes = {
   className: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 CardList.defaultProps = {

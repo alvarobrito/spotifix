@@ -12,6 +12,7 @@ class GenresContainer extends Component {
 
   render() {
     const { loading, genres } = this.props;
+    console.log('this.props', this.props);
 
     return (
       <div>
@@ -28,7 +29,7 @@ class GenresContainer extends Component {
 // PropTypes validation
 GenresContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchGenres: PropTypes.func.isRequired,
 };
 

@@ -1,21 +1,40 @@
 .card {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 22px;
+  width: 320px;
+  height: 320px;
+  padding-bottom: 110px;
+  box-sizing: content-box;
+  background-color: white;
+  background-size: 320px 320px;
+  background-repeat: no-repeat;
+  background-position: top center;
+  position: relative;
+  transition: all 0.25s ease-in;
+  opacity: 1;
 }
 
-  .card__title {
-    font-size: 30px;
-    font-weight: 400;
-    color: #515151;
-    display: block;
+.card:hover {
+  background-color: #000;
+  opacity: 0.85;
+}
+
+  .card__text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 22px;
   }
 
-  .card__subtitle {
-    display: block;
-    margin-top: 6px;
-    color: #b3b3b3;
-    font-size: 20px;
-  }
+    .card__title {
+      font-size: 30px;
+      font-weight: normal;
+      color: #515151;
+      display: block;
+    }
+
+    .card__subtitle {
+      display: block;
+      margin-top: 6px;
+      color: #b3b3b3;
+      font-size: 20px;
+    }

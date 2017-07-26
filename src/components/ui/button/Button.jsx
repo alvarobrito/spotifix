@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './Button.css';
 
-const Button = ({ onClick, primary, children }) =>
+const Button = ({ primary, children, ...props }) =>
   <button
-    onClick={onClick}
     className={classnames('btn', { 'btn--primary': !!primary })}
     type="button"
+    {...props}
   >
     {children}
   </button>;
 
 Button.propTypes = {
-  onClick: PropTypes.func,
   primary: PropTypes.string,
   children: PropTypes.node.isRequired,
 };

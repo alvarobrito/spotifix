@@ -5,22 +5,22 @@ const withAlbum = albumId => tracks =>
   tracks.items.map(t => ({ ...t, album: albumId }));
 
 // Entities
-const trackSchema = new schema.Entity('tracks', {}, {
+export const trackSchema = new schema.Entity('tracks', {}, {
   processStrategy: ({ id, name, artists, album }) =>
     ({ id, name, artists, album }),
 });
 
-const artistSchema = new schema.Entity('artists', {}, {
+export const artistSchema = new schema.Entity('artists', {}, {
   mergeStrategy: (entityA, entityB) => ({
     ...entityA,
     ...entityB,
     images: entityA.images || entityB.images || [],
   }),
-  processStrategy: ({ id, name, images, popularity }) =>
-    ({ id, name, images, popularity }),
+  processStrategy: ({ id, name, images, followers: { total: followers } }) =>
+    ({ id, name, images, followers: followers.toLocaleString() }),
 });
 
-const albumSchema = new schema.Entity('albums', {}, {
+export const albumSchema = new schema.Entity('albums', {}, {
   processStrategy: ({ id, name, label, images, artists, tracks }) => {
     if (tracks) return { id, name, label, images, artists, tracks: withAlbum(id)(tracks) };
     return { id, name, label, images, artists };
