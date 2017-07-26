@@ -64,6 +64,13 @@ a {
   padding-bottom: .8rem;
   margin-bottom: 20px;
   text-transform: uppercase;
+  transition: color 300ms ease-in;
+}
+a.h2:hover {
+  color: white;
+}
+.--nosep {
+  border-bottom: 0;
 }
 
 .content {

@@ -78,7 +78,7 @@ function* loadGenres() {
       const genres = yield call(Api.getGenres);
       yield put(setGenres(genres));
     } catch ({ status }) {
-      // yield put(throwError(status));
+      yield put(throwError(status));
     }
     yield put(setLoading(false));
   }

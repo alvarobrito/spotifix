@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import Hamburger from 'react-hamburgers';
 import BurgerMenu from '@/components/ui/BurgerMenu/BurgerMenu';
+import Nav from '@/components/ui/Nav';
 import './Header.css';
 
 /**
@@ -41,15 +41,7 @@ class Header extends Component {
             type="boring hamburger--m"
             onClick={this.toggleMenu}
           />
-          <nav className="nav">
-            <ul className="nav__content">
-              {items.map(e => (
-                <li className="nav__item" key={e}>
-                  <NavLink to="" className="nav__link">{e}</NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <Nav />
         </BurgerMenu>
         <header className="header">
           <Hamburger

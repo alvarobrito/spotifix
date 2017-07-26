@@ -5,9 +5,7 @@ import { NavLink } from 'react-router-dom';
 import './TrackList.css';
 
 const TrackList = ({ className, tracks }) => {
-  if (!tracks) {
-    return null;
-  }
+  if (!tracks) return null;
   return (
     <ol className={classnames('track-list', { [`track-list--${className}`]: !!className })}>
       {tracks.map(({ id, name, album, artists }) =>

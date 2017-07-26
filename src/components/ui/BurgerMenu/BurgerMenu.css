@@ -32,6 +32,7 @@
       background: rgba(0, 0, 0, 0.85);
       position: fixed;
       height: 100%;
+      overflow: auto;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
       transform: translateX(-100%);
       will-change: transform;
@@ -57,4 +58,7 @@
       color: #ddd;
       margin-bottom: 10px;
       display: block;
+    }
+    .nav .h2 {
+      color: #ddd;
     }
