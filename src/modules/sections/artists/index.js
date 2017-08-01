@@ -131,18 +131,15 @@ function* fetchArtists({ genre, offset }, artistAction) {
 }
 
 function* loadAllArtists({ payload: genre }) {
-  const { count } = yield select(getArtistsSection);
-  if (!count) {
-    yield put(resetState());
-    yield put(setLoading(true));
-    try {
-      const { offset } = yield select(getArtistsSection);
-      yield call(fetchArtists, { genre, offset }, addArtists);
-    } catch ({ status }) {
-      yield put(throwError(status));
-    }
-    yield put(setLoading(false));
+  yield put(resetState());
+  yield put(setLoading(true));
+  try {
+    const { offset } = yield select(getArtistsSection);
+    yield call(fetchArtists, { genre, offset }, addArtists);
+  } catch ({ status }) {
+    yield put(throwError(status));
   }
+  yield put(setLoading(false));
 }
 
 function* loadMoreArtists() {
