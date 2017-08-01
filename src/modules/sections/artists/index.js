@@ -135,7 +135,7 @@ function* loadAllArtists({ payload: genre }) {
   yield put(setLoading(true));
   try {
     const { offset } = yield select(getArtistsSection);
-    yield call(fetchArtists, { genre, offset }, addArtists);
+    yield call(fetchArtists, { genre, offset }, setArtists);
   } catch ({ status }) {
     yield put(throwError(status));
   }
