@@ -37,9 +37,9 @@ class Nav extends Component {
         </ul>
         <h1 className="h2">Genres</h1>
         <ul className="nav__content">
-          {this.props.items.map(e => (
-            <li className="nav__item" key={e}>
-              <NavLink to="" className="nav__link">{e}</NavLink>
+          {this.props.items.map(genre => (
+            <li className="nav__item" key={genre}>
+              <NavLink to={`/artists/${genre}`} className="nav__link">{genre}</NavLink>
             </li>
           ))}
         </ul>

@@ -6,10 +6,16 @@ import withFetchOnScroll from '@/components/hoc/withFetchOnScroll';
 import { fetchAllArtists, fetchMoreArtists } from '@/modules/sections/artists';
 import { getArtistsList } from '@/modules/sections/artists/selectors';
 
-class ArtistsContainer extends Component {
+class ArtistsList extends Component {
 
   componentDidMount() {
-    this.props.fetchAllArtists();
+    this.props.fetchAllArtists(this.props.genre);
+  }
+
+  componentDidUpdate({ genre }) {
+    if (this.props.genre !== genre) {
+      this.props.fetchAllArtists(this.props.genre);
+    }
   }
 
   render() {
@@ -19,7 +25,7 @@ class ArtistsContainer extends Component {
         {(!!artists.length) && (
           <CardList items={artists} />
         )}
-        {/*{(loading) && (<Spinner />)}*/}
+        {/* {(loading) && (<Spinner />)} */}
       </div>
     );
   }
@@ -27,14 +33,16 @@ class ArtistsContainer extends Component {
 }
 
 // PropTypes validation
-ArtistsContainer.propTypes = {
+ArtistsList.propTypes = {
   loading: PropTypes.bool.isRequired,
+  genre: PropTypes.string.isRequired,
   artists: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchAllArtists: PropTypes.func.isRequired,
 };
 
-ArtistsContainer.defaultProps = {
+ArtistsList.defaultProps = {
   artists: [],
+  genre: '',
 };
 
 // Redux connector
@@ -49,4 +57,4 @@ const mapDispatchToProps = {
   scrollFunction: fetchMoreArtists,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withFetchOnScroll(ArtistsContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withFetchOnScroll(ArtistsList));

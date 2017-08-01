@@ -24,7 +24,7 @@ const getGenres = () =>
   .then(data => data.genres);
 
 const getAllArtists = (value, offset) =>
-  spotifyApi.searchArtists(value, { offset })
+  spotifyApi.searchArtists(`genre:${value}`, { offset })
   .then(({ artists: { items: artists } }) => normalize(artists, [artistSchema]));
 
 const searchTracks = (value, offset) =>

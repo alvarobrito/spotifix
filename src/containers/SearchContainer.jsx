@@ -9,7 +9,7 @@ import { fetchSongs, fetchMoreSongs } from '@/modules/sections/search';
 import { getSearchTracks } from '@/modules/sections/search/selectors';
 
 const SearchContainer = ({ onSearchChange, loading, tracks }) => (
-  <div className="search-wrapper">
+  <div className="search-wrapper content">
     <Search onChange={(event) => onSearchChange(event.target.value)} />
     <TrackList tracks={tracks} />
     {(loading) && (<p style={{ textAlign: 'center', clear: 'both' }}>loading...</p>)}
