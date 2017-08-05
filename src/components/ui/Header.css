@@ -17,6 +17,24 @@
     text-align: center;
     color: #5e5e5e;
   }
+  .hamburger--arrowturn {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+  }
+
+.nav {
+  width: 300px;
+  padding: 40px;
+}
+.nav a {
+  color: #ddd;
+  margin-bottom: 10px;
+  display: block;
+}
+.nav .h2 {
+  color: #ddd;
+}
 
   /*!
  * Hamburgers

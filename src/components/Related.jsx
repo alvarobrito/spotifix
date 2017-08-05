@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const Related = ({ artists }) => (
-  <div>
+  <ol>
     {artists.map(a =>
-      <NavLink key={a.id} to={`${a.id}`}>{a.name}</NavLink>)}
-  </div>
+      <li key={a.id}><NavLink to={`${a.id}`}>{a.name}</NavLink></li>
+    )}
+  </ol>
 );
 
 

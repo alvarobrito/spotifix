@@ -27,24 +27,24 @@ class ArtistPage extends Component {
   render() {
     const { loading, albums, artist, relatedArtists, topTracks } = this.props;
 
-    const styles = {
-      card: {
-        height: '450px',
-      },
-    };
-
     return (
-      <div>
+      <div className="content">
         {(!loading) && (
           <div>
             <h1 className="h2">{artist.name}</h1>
-            <img src={artist.images[0].url} style={styles.card} alt="" />
-            <h3 className="h2">Popular</h3>
-            <TrackList tracks={topTracks} />
-            <h3 className="h2">Albums</h3>
-            <Albums albums={albums} />
-            <h3 className="h2">Related artists</h3>
-            <Related artists={relatedArtists} />
+            <img src={artist.images[0].url} alt="" />
+            <div className="group">
+              <h3 className="h2">Popular</h3>
+              <TrackList tracks={topTracks} />
+            </div>
+            <div className="group">
+              <h3 className="h2">Albums</h3>
+              <Albums albums={albums} />
+            </div>
+            <div className="group">
+              <h3 className="h2">Related artists</h3>
+              <Related artists={relatedArtists} />
+            </div>
           </div>
         )}
         {(loading) && (<Spinner />)}

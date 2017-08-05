@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Search = ({ onChange }) => (
-  <label>
-    Search a song:
-    <input type="text" onChange={onChange} />
-  </label>
+  <div className="container">
+    <label>
+      Search a song:
+      <input type="text" onChange={onChange} />
+    </label>
+  </div>
 );
 
 Search.propTypes = {

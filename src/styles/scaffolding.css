@@ -66,6 +66,7 @@ a {
   text-transform: uppercase;
   transition: color 300ms ease-in;
 }
+
 a.h2:hover {
   color: white;
 }
@@ -75,4 +76,7 @@ a.h2:hover {
 
 .content {
   padding: 130px 30px 30px;
+}
+.group {
+  padding: 20px 0;
 }

@@ -49,16 +49,3 @@
       pointer-events: auto;
       transition: transform 330ms ease-in;
     }
-
-    .nav {
-      width: 300px;
-      padding: 40px;
-    }
-    .nav a {
-      color: #ddd;
-      margin-bottom: 10px;
-      display: block;
-    }
-    .nav .h2 {
-      color: #ddd;
-    }

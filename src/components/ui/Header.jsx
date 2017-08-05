@@ -18,7 +18,7 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <BurgerMenu open={this.state.isOpen} onClickOverlay={this.toggleMenu}>
+        <BurgerMenu open={this.state.isOpen} onClose={this.toggleMenu}>
           <Hamburger
             active
             type="boring hamburger--m"
@@ -31,7 +31,6 @@ class Header extends Component {
             active={false}
             type="arrowturn"
             onClick={this.toggleMenu}
-            style={{ position: 'absolute', top: '20px', left: '10px' }}
           />
           <h1 className="header__title">Spotifix</h1>
         </header>

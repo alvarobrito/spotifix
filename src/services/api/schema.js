@@ -16,8 +16,10 @@ export const artistSchema = new schema.Entity('artists', {}, {
     ...entityB,
     images: entityA.images || entityB.images || [],
   }),
-  processStrategy: ({ id, name, images, followers: { total: followers } }) =>
-    ({ id, name, images, followers: followers.toLocaleString() }),
+  processStrategy: ({ id, name, images, followers }) => {
+    if (followers) return { id, name, images, followers: followers.total.toLocaleString() };
+    return { id, name, images };
+  },
 });
 
 export const albumSchema = new schema.Entity('albums', {}, {

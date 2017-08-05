@@ -4,7 +4,7 @@ import Api from '@/services/api';
 import { getArtistsSection } from './selectors';
 
 // Actions
-const RESET_STATE = 'artists/RESET_STATE';
+const RESET_ARTISTS = 'artists/RESET_ARTISTS';
 const SELECT_GENRE = 'artists/SELECT_GENRE';
 const SET_ARTISTS = 'artists/SET_ARTISTS';
 const ADD_ARTISTS = 'artists/ADD_ARTISTS';
@@ -20,7 +20,7 @@ const FETCH_ARTISTS_FAILURE = '@effect/artists/FETCH_ARTISTS_FAILURE';
 const INIT_STATE = {
   offset: 0,
   count: 0,
-  genre: '',
+  genre: 'pop',
   limit: 20,
   list: [],
   loading: false,
@@ -29,9 +29,8 @@ const INIT_STATE = {
 // Reducers
 export default createReducer(INIT_STATE, {
 
-  [RESET_STATE](state) {
+  [RESET_ARTISTS]() {
     return {
-      ...state,
       ...INIT_STATE,
     };
   },
@@ -77,8 +76,8 @@ export default createReducer(INIT_STATE, {
 });
 
 // Action Creators
-export const resetState = () => ({
-  type: RESET_STATE,
+export const resetArtists = () => ({
+  type: RESET_ARTISTS,
 });
 
 export const addArtists = ({ entities, result }) => ({
@@ -131,11 +130,11 @@ function* fetchArtists({ genre, offset }, artistAction) {
 }
 
 function* loadAllArtists({ payload: genre }) {
-  yield put(resetState());
+  yield put(resetArtists());
   yield put(setLoading(true));
   try {
-    const { offset } = yield select(getArtistsSection);
-    yield call(fetchArtists, { genre, offset }, setArtists);
+    const { genre: selectedGenre, offset } = yield select(getArtistsSection);
+    yield call(fetchArtists, { genre: genre || selectedGenre, offset }, setArtists);
   } catch ({ status }) {
     yield put(throwError(status));
   }

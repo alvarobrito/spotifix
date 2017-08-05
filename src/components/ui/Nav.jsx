@@ -6,12 +6,12 @@ import { fetchGenres } from '@/modules/sections/genres';
 
 const links = [
   {
-    text: 'Home',
+    text: 'Artists',
     path: '/',
   },
   {
-    text: 'Browse',
-    path: '/browse',
+    text: 'Tracks',
+    path: '/tracks',
   },
   {
     text: 'Login',
