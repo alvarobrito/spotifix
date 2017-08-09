@@ -1,7 +1,7 @@
 # Spotifix React & Redux App
 A music web application using ReactJS, Redux and the Spotify API.
 
-![Demo Spotifix](https://raw.githubusercontent.com/alvarobrito/playlist-maker/master/spotifix_demo.gif)
+![Demo Spotifix](https://raw.githubusercontent.com/alvarobrito/spotifix/master/spotifix_demo.gif)
 
 # Usage
 
