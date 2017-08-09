@@ -25,7 +25,7 @@ const Albums = ({ albums }) => (
   <ul style={styles.root}>
     {albums.map(a =>
       <li style={styles.list} key={a.id}>
-        <NavLink to={`../album/${a.id}`} style={styles.link}>
+        <NavLink to={`/albums/${a.id}`} style={styles.link}>
           <img src={a.images[0].url} alt={a.name} style={styles.image} />
         </NavLink>
       </li>)}

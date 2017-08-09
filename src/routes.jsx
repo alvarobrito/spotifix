@@ -27,11 +27,9 @@ const Routes = ({ history }) => (
       {/*<Dialog />*/}
       <Route exact path="/" component={ArtistsPage} />
       <Route path="/tracks" component={SearchContainer} />
-      <Route path="/login" component={LoginPage} />
-      <Route path="/artists/:genre" exact component={ArtistsPage} />
-      <Route path="/artist/:artistId" exact component={ArtistPage} />
-      <Route path="/artist/:artistId/album/:albumId" component={AlbumPage} />
-      <Route path="/album/:albumId" component={AlbumPage} />
+      <Route path="/artists/:artistId" exact component={ArtistPage} />
+      <Route path="/artists/genre/:genre" exact component={ArtistsPage} />
+      <Route path="/albums/:albumId" component={AlbumPage} />
     </div>
   </ConnectedRouter>
 );

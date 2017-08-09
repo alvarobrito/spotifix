@@ -11,8 +11,8 @@ const TrackList = ({ className, tracks }) => {
       {tracks.map(({ id, name, album, artists }) =>
         <li key={id} className="track-list__item">
           <strong className="track-list__title">{name}</strong>
-          {(artists) && (<NavLink to={`/artist/${artists[0].id}`}><span className="track-list__subtitle">{artists[0].name}</span></NavLink>)}
-          <NavLink to={`/album/${album.id}`}>
+          {(artists) && (<NavLink to={`/artists/${artists[0].id}`}><span className="track-list__subtitle">{artists[0].name}</span></NavLink>)}
+          <NavLink to={`/albums/${album.id}`}>
             <span className="track-list__subtitle">{album.name}</span>
           </NavLink>
         </li>)}

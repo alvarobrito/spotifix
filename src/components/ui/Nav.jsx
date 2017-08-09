@@ -31,7 +31,9 @@ class Nav extends Component {
         <ul className="nav__content">
           {links.map(e => (
             <li className="nav__item" key={e.text}>
-              <NavLink to={e.path} className="h2 --nosep">{e.text}</NavLink>
+              {(e.path !== '/login') ?
+                <NavLink to={e.path} className="h2 --nosep">{e.text}</NavLink> :
+                <a href={e.path} className="h2 --nosep">{e.text}</a>}
             </li>
           ))}
         </ul>
@@ -39,7 +41,7 @@ class Nav extends Component {
         <ul className="nav__content">
           {this.props.items.map(genre => (
             <li className="nav__item" key={genre}>
-              <NavLink to={`/artists/${genre}`} className="nav__link">{genre}</NavLink>
+              <NavLink to={`/artists/genre/${genre}`} className="nav__link">{genre}</NavLink>
             </li>
           ))}
         </ul>

@@ -1,8 +1,8 @@
 .header {
   background-color: white;
   box-shadow: 0 0 3px 1px #ccc;
-  height: 96px;
-  padding: 30px;
+  height: 80px;
+  padding: 24px;
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@
   }
   .hamburger--arrowturn {
     position: absolute;
-    top: 20px;
+    top: 14px;
     left: 10px;
   }
 

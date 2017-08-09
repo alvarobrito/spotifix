@@ -9,7 +9,7 @@ const CardList = ({ className, items }) => (
   <ul className={classnames('card-list', { [`card-list--${className}`]: !!className })}>
     {items.map(obj => (
       <li key={obj.id} className="card-list__item">
-        <NavLink to={`/artist/${obj.id}`} className="card-list__link">
+        <NavLink to={`/artists/${obj.id}`} className="card-list__link">
           <Card title={obj.name} subtitle={`${obj.followers} Followers`} image={obj.images[1] && obj.images[1].url} />
         </NavLink>
       </li>))}
