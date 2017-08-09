@@ -10,7 +10,7 @@ const OUTPUT_PATH = resolve('dist');
 module.exports = {
   devtool: 'source-map',
   context: SOURCE_PATH,
-  entry: [path.join(SOURCE_PATH, 'main.jsx')],
+  entry: [path.join(SOURCE_PATH, 'main.js')],
   output: {
     path: OUTPUT_PATH,
     filename: 'bundle.js',
@@ -68,7 +68,7 @@ module.exports = {
     historyApiFallback: {
       disableDotRule: true,
     },
-    host: '192.168.1.38',
+    // host: '192.168.1.38',
     port: 3000,
     compress: false,
     inline: true,

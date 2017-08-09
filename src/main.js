@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { compose, combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
@@ -10,7 +10,7 @@ import logger from 'redux-logger';
 
 import reducers from '@/modules/reducers';
 import sagas from '@/modules/sagas';
-import Routes from '@/routes';
+import App from '@/app';
 
 // styles
 import '@/styles/index.css';
@@ -41,7 +41,9 @@ sagaMiddleware.run(sagas);
 
 render(
   <Provider store={store}>
-    <Routes history={history} />
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('app'),
 );
