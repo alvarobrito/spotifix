@@ -12,6 +12,9 @@ yarn install
 # serve the app: http://localhost:8080/
 npm start
 
+# run test
+npm test
+
 # generate a package
 npm run build
 ```

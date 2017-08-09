@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './Button.css';
+// import './Button.css';
 
-const Button = ({ primary, children, ...props }) =>
-  <button
-    className={classnames('btn', { 'btn--primary': !!primary })}
-    type="button"
-    {...props}
-  >
-    {children}
-  </button>;
+const Button = ({ primary, children, ...props }) => {
+  if (!children) return null;
+  return (
+    <button
+      className={classnames('btn', { 'btn--primary': !!primary })}
+      type="button"
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
 
 Button.propTypes = {
   primary: PropTypes.string,
