@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-// import './Button.css';
+import './Button.css';
 
 const Button = ({ primary, children, ...props }) => {
   if (!children) return null;
