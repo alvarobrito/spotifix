@@ -9,7 +9,9 @@
     padding: 1rem;
     font-size: 1.1em;
     color: #5e5e5e;
-    border-bottom: 1px solid #d7d7d7;
+  }
+  .track-list__item:nth-child(2n+1) {
+    background-color: #f9f9f9;
   }
 
     .track-list__title {

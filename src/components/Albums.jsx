@@ -6,17 +6,30 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+  },
+  list: {
+    width: '25%',
+  },
+  link: {
+    display: 'block',
+    margin: '8%',
+  },
+  image: {
+    borderRadius: '50%',
+    border: 'solid 1px white',
+    display: 'block',
   },
 };
 
 const Albums = ({ albums }) => (
-  <div style={styles.root}>
+  <ul style={styles.root}>
     {albums.map(a =>
-      <NavLink key={a.id} to={`../album/${a.id}`}>
-        <img src={a.images[0].url} alt={a.name} />
-      </NavLink>)}
-  </div>
+      <li style={styles.list} key={a.id}>
+        <NavLink to={`../album/${a.id}`} style={styles.link}>
+          <img src={a.images[0].url} alt={a.name} style={styles.image} />
+        </NavLink>
+      </li>)}
+  </ul>
 );
 
 Albums.propTypes = {

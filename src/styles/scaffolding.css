@@ -58,6 +58,8 @@ a {
  * Custom (TODO)
 */
 
+/* titles */
+
 .h2 {
   opacity: 0.7;
 	font-size: 20px;
@@ -78,23 +80,68 @@ a.h2:hover {
   border-bottom: 0;
 }
 
+/* content */
 .content {
-  padding: 130px 30px 30px;
+  padding: 121px 24px 24px;
+  position: relative;
+}
+
+.content__inner {
+  margin: -24px;
 }
 
 .group {
-  padding: 20px 0;
+  padding: 24px;
 }
 
+/* icons */
 .hamburger--m .hamburger-box,
 .hamburger--m .hamburger-inner,
 .hamburger--m .hamburger-inner::before,
 .hamburger--m .hamburger-inner::after {
-    width: 20px;
+  width: 20px;
 }
 
 .hamburger--m .hamburger-inner,
 .hamburger--m .hamburger-inner::before,
 .hamburger--m .hamburger-inner::after {
-    background-color: #ddd;
+  background-color: #ddd;
+}
+
+/* forms */
+
+.search {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.input-search {
+  width: 100%;
+  font-size: 24px;
+  padding: 4px;
+  background-color: transparent;
+  border-bottom: 1px solid #aaa;
+  color: #333;
+}
+
+/* images */
+.overlay-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 210px;
+  width: 100%;
+  position: relative;
+}
+
+.overlay-image__title {
+  color: #f6f6f6;
+  font-size: 44px;
+  font-weight: bold;
+  line-height: normal;
+  text-shadow: 1px 1px #000;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  text-align: right;
 }

@@ -20,21 +20,18 @@ class AlbumPage extends Component {
 
   render() {
     const { album, tracks, loading } = this.props;
-    const styles = {
-      card: {
-        height: '450px',
-      },
-    };
 
     return (
-      <div>
+      <div className="content">
         {(!loading) && (
-          <div>
-            <h1 className="h2">{album.name}</h1>
-            <h2>{album.label}</h2>
-            <img src={album.images[0].url} style={styles.card} alt="" />
-            <TrackList tracks={tracks} />
-          </div>
+          <article className="content__inner">
+            <header className="overlay-image" style={{ backgroundImage: `url(${album.images[0].url})` }}>
+              <h1 className="overlay-image__title">{album.name}</h1>
+            </header>
+            <div className="group">
+              <TrackList tracks={tracks} />
+            </div>
+          </article>
         )}
         {(loading) && (<Spinner />)}
       </div>

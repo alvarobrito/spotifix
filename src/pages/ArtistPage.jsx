@@ -30,22 +30,23 @@ class ArtistPage extends Component {
     return (
       <div className="content">
         {(!loading) && (
-          <div>
-            <h1 className="h2">{artist.name}</h1>
-            <img src={artist.images[0].url} alt="" />
-            <div className="group">
-              <h3 className="h2">Popular</h3>
+          <article className="content__inner">
+            <header className="overlay-image" style={{ backgroundImage: `url(${artist.images[0].url})` }}>
+              <h1 className="overlay-image__title">{artist.name}</h1>
+            </header>
+            <section className="group">
+              <h2 className="h2">Popular tracks</h2>
               <TrackList tracks={topTracks} />
-            </div>
-            <div className="group">
-              <h3 className="h2">Albums</h3>
+            </section>
+            <section className="group">
+              <h2 className="h2">Albums</h2>
               <Albums albums={albums} />
-            </div>
-            <div className="group">
-              <h3 className="h2">Related artists</h3>
+            </section>
+            <section className="group">
+              <h2 className="h2">Related artists</h2>
               <Related artists={relatedArtists} />
-            </div>
-          </div>
+            </section>
+          </article>
         )}
         {(loading) && (<Spinner />)}
       </div>

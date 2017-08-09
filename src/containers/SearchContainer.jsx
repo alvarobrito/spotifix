@@ -12,7 +12,7 @@ const SearchContainer = ({ onSearchChange, loading, tracks }) => (
   <div className="search-wrapper content">
     <Search onChange={(event) => onSearchChange(event.target.value)} />
     <TrackList tracks={tracks} />
-    {(loading) && (<p style={{ textAlign: 'center', clear: 'both' }}>loading...</p>)}
+    {(loading) && (<p style={{ textAlign: 'center', clear: 'both', margin: '12px 0', fontSize: '62px', fontWeight: 'bold', letterSpacing: '6px' }}>...</p>)}
   </div>
 );
 
