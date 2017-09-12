@@ -22,6 +22,7 @@
     "classnames": "^2.2.5",
     "cross-env": "^3.2.4",
     "es-decorators": "^1.0.0",
+    "hamburgers": "^0.9.1",
     "history": "^4.6.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.4",
